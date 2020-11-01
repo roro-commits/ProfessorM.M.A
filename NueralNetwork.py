@@ -6,6 +6,7 @@ from calc.NN_calc import Nueral_calc as n_calc
 
 
 
+
 class NeuralNetwork:
 
     def __init__(self,input_node,hidden_node,output_node):
