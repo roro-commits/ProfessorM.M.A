@@ -1,7 +1,9 @@
-from numpy.core.defchararray import array
+import matplotlib.pyplot as mlp
 import numpy as np
-from NN_calc import Nueral_calc as n_calc
-import  matplotlib.pyplot as mlp
+from numpy.core.defchararray import array
+
+from calc.NN_calc import Nueral_calc as n_calc
+
 
 
 class NeuralNetwork:
