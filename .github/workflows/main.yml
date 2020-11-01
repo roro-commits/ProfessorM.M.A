@@ -13,3 +13,5 @@ jobs:
         run: echo "Hello, world!"
       - name: Another greeting
         run: echo "Hello, world!"
+      - name: run Neural network script
+        run: .\NueralNetwork.py
