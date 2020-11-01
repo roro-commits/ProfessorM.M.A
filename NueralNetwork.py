@@ -1,7 +1,6 @@
 from numpy.core.defchararray import array
-from calc.NN_calc import Nueral_calc
 import numpy as np
-from calc.NN_calc import Nueral_calc as n_calc
+from NN_calc import Nueral_calc as n_calc
 import  matplotlib.pyplot as mlp
 
 
