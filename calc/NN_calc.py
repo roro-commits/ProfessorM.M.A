@@ -33,6 +33,7 @@ class Nueral_calc:
 
 
 
+
     def activation_function(self, input_x, func):
         self.out_x =[]
 
@@ -43,6 +44,8 @@ class Nueral_calc:
         return self.out_x
 
         
+
+
 
 
     
