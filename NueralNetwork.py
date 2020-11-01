@@ -23,6 +23,7 @@ class NeuralNetwork:
         print("output weght input",(self.output_hidden_weight))
         pass 
 
+
     def feed_Forward(self, X_input):
     
        # X_input = np.array(X_input,ndmin=2)  #// converting X_input into 2D array
