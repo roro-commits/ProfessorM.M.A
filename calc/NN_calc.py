@@ -13,6 +13,10 @@ class Nueral_calc:
     def matrixdot( self,weights, inputs ):
         self.input_x  = weights.dot(inputs)
         return self.input_x
+    
+    def matrixsub():
+
+        pass
 
 
     
@@ -44,6 +48,12 @@ class Nueral_calc:
             self.out_x.append(out)
         
         return self.out_x
+
+
+    def visual(self,input,msg):
+        self.draw = input
+        print("############"+msg+"#################")
+        print(np.array(self.draw))
 
         
 

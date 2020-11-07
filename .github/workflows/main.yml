@@ -29,8 +29,6 @@ jobs:
     - name : run script
       run: | 
         python NueralNetwork.py > output.txt
-    
-    - name: Upload pytest test results
       uses: actions/upload-artifact@v2
       with:
         name: output.txt
