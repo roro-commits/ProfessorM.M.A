@@ -25,17 +25,14 @@ jobs:
         pip install numpy
         pip install matplotlib
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-
     - name : run script
       run: | 
         python NueralNetwork.py > output.txt
+    
+    - name: Upload pytest test results
       uses: actions/upload-artifact@v2
       with:
         name: output.txt
         path: Artifacts/output.txt
       # Use always() to always run this step to publish test results when there are test failures
       if: ${{ always() }}
-      
-
-   
-
