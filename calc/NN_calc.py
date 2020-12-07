@@ -1,6 +1,7 @@
 import numpy as np 
 import math as mp
 
+import scipy
 
 
 class Nueral_calc:
@@ -15,8 +16,8 @@ class Nueral_calc:
 
     
     def sigmoid (self,input_x):
-        eular = np.exp(1)
-        self.sig = 1/(1 + mp.pow(eular,-input_x))
+        self.input_x = input_x
+        self.sig = scipy.special.expit(input_x)
 
         return self.sig
 

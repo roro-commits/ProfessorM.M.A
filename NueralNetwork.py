@@ -1,8 +1,12 @@
 from numpy.core.defchararray import array
-from calc.NN_calc import Nueral_calc
 import numpy as np
 from calc.NN_calc import Nueral_calc as n_calc
 import  matplotlib.pyplot as mlp
+import  pandas as pd
+from sklearn.preprocessing import LabelEncoder as encoder
+
+
+
 
 
 class NeuralNetwork:
@@ -26,7 +30,7 @@ class NeuralNetwork:
        # X_input = np.array(X_input,ndmin=2)  #// converting X_input into 2D array
         
         self.InputTOHidden = n_calc()
-        ITH = self.InputTOHidden.matrixdot(self.hidden_input_weight,X_input)
+        ITH = self.InputTOHidden.matrixdot(self.hidden_input_weight,X_input.T)
         ## Activation Layer of input * l2 weight 
         self.InputToOut = n_calc()
         ITO = self.InputToOut.activation_function(ITH,self.InputToOut.sigmoid)
@@ -43,12 +47,29 @@ class NeuralNetwork:
 inputs = np.random.rand(30,1) - 0.5
 #inputs = np.array([0.9,0.1,0.8])
 print()
-Nn = NeuralNetwork(30,100,12)
+Nn = NeuralNetwork(28,28,1)
 Nn.train()
 
-result = Nn.feed_Forward(inputs)
-Nn = NeuralNetwork(12,3,1)
-deeplayer = Nn.feed_Forward(result)
-print("OUTput", result)
-print("more layers", deeplayer)
 
+
+UFC_data = pd.read_csv('/home/rotimi/Documents/FYP/UFC_data.csv')
+UFC_data['Stance'] = encoder().fit_transform(UFC_data['Stance'])
+UFC_data['Stance.1'] = encoder().fit_transform(UFC_data['Stance'])
+UFC_data = UFC_data.drop(['Unnamed: 0'], axis=1)
+UFC_data = UFC_data.drop(['Name'], axis=1)
+UFC_data = UFC_data.drop(['Name.1'], axis=1)
+cols_to_norm = ['Height', 'Stance', 'Weight', 'Reach', 'DOB', 'SLpm', 'SAcc',
+                'SApm', 'StrDef', 'TDAvg', 'TDAcc', 'TDDef', 'SubAvg', 'AvgTime2Win',
+                'Height.1', 'Stance.1', 'Weight.1', 'Reach.1', 'DOB.1',
+                'SLpm.1', 'SApm.1', 'StrDef.1', 'TDAvg.1', 'TDAcc.1',
+                'TDDef.1', 'SubAvg.1', 'AvgTime2Win.1']
+UFC_data[cols_to_norm] = UFC_data[cols_to_norm].apply(lambda x: (x - x.min()) / (x.max() - x.min()))
+
+x_data = UFC_data.drop('Win', axis=1)
+labels = UFC_data['Win']
+
+x = x_data.loc[0:8]
+
+print(x)
+result = Nn.feed_Forward(x)
+print(result)
