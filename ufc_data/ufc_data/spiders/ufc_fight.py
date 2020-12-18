@@ -61,6 +61,22 @@ class UfcFightSpider(scrapy.Spider):
                 data['Sub. Avg'] = fight_attribute[27]
 
 
+                # side 
+                #  data['HEIGHT1'] = strip[1]
+                # data['WEIGHT1'] = fight_attribute[3]
+                # data['REACH1'] = fight_attribute[5]
+                # data['STANCE1'] = fight_attribute[7]
+                # data['DOB1'] = fight_attribute[9]
+                # data['SLpM1'] = fight_attribute[11]
+                # data['Str. Acc..1'] = fight_attribute[13]
+                # data['SApM'] = fight_attribute[15]
+                # data['Str. Def1'] = fight_attribute[17]
+                # data['TD Avg1'] = fight_attribute[21]
+                # data['TD Acc1'] = fight_attribute[23]
+                # data['TD Def.1'] = fight_attribute[25]
+                # data['Sub. Avg1'] = fight_attribute[27]
+
+
 
 
 
@@ -74,10 +90,5 @@ class UfcFightSpider(scrapy.Spider):
 
 
 
-                                
-
-
-
-      
-
+                        
         pass
