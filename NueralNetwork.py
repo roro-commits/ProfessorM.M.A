@@ -72,7 +72,7 @@ x = x_data.loc[0:8]
 
 print(x)
 result = Nn.feed_Forward(x)
-derf  = np.asarray(result)
+derf = np.asarray(result)
 print(len(result))
 print(derf)
 print(len(derf))
