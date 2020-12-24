@@ -8,7 +8,7 @@ csv_rows = ['NAME', 'HEIGHT', 'WEIGHT', 'REACH', 'STANCE', 'DOB', 'SLpM', 'StrAc
             ]
 result = ['1', '0']
 
-with open('/home/rotimi/Documents/FYP/ProfessorM.M.A/ufc_data/not_clean.csv', 'r+') as csvfile:
+with open('ProfessorM.M.A/ufc_data/not_clean.csv', 'r+') as csvfile:
     spamreader = csv.reader(csvfile, delimiter=',')
     for row in spamreader:
         clean_data.append(row[0:14])
