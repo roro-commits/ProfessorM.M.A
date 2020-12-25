@@ -33,7 +33,7 @@ jobs:
         cd ufcFighterData
         ls 
         pwd
-        scrapy crawl ufcFighterData -o fighterDataLink.csv
+        scrapy crawl fighterdataLink -o fighterDataLink.csv
         ls
       #        python NueralNetwork.py > output.txt
     - name: Upload pytest test results
