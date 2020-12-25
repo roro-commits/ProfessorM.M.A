@@ -5,6 +5,7 @@ on: [push]
 jobs:
   build:
 
+
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -41,7 +42,8 @@ jobs:
       if: ${{ always() }}
 
 job_2:
-  runs-on: ubuntu-latest
+  build:
+    runs-on: ubuntu-latest
     strategy:
       matrix:
         python-version: [ 3.7
@@ -56,3 +58,4 @@ job_2:
         with:
           name: fighterData
           path: fighterData.csv
+  
