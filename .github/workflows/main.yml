@@ -41,6 +41,6 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: fighterdataLink.csv
-        path: ProfessorM.M.A/ufcFighterData/fighterDataLink.csv
+        path: Artifacts/fighterDataLink.csv
       # Use always() to always run this step to publish test results when there are test failures
       if: ${{ always() }}
