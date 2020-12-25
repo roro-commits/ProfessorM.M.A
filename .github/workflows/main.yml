@@ -35,6 +35,7 @@ jobs:
         pwd
         scrapy crawl fighterdataLink -o fighterDataLink.csv
         ls
+        pwd
       #        python NueralNetwork.py > output.txt
     - name: upload fighters stats link
       uses: actions/upload-artifact@v2
