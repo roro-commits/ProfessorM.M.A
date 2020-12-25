@@ -73,7 +73,7 @@ jobs:
       run: |
         ls
         pwd
-        cp fighterdataLink.csv /fighterData
+        sudo cp -r fighterdataLink.csv /fighterData
         ls
         pwd
         scrapy crawl fighterData -o fighterData.csv
