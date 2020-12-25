@@ -24,11 +24,15 @@ jobs:
         pip install flake8 pytest
         pip install numpy
         pip install matplotlib
+        pip install scrapy
+        pip install pandas
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name : run script
-      run: | 
-        python NueralNetwork.py > output.txt
-    
+      run: |
+        cd
+        scrapy crawl ufc_stats -o ufc_fighter_stats.csv
+        ls
+      #        python NueralNetwork.py > output.txt
     - name: Upload pytest test results
       uses: actions/upload-artifact@v2
       with:
