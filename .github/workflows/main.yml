@@ -73,7 +73,7 @@ jobs:
       run: |
         ls
         pwd
-        mv fighterdataLink.csv /fighterData
+        sudo mv fighterdataLink.csv /fighterData
         cd fighterData
         scrapy crawl fighterData -o fighterData.csv
     - name: Upload math result for job 2
