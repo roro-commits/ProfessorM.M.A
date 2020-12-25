@@ -41,22 +41,23 @@ jobs:
       # Use always() to always run this step to publish test results when there are test failures
       if: ${{ always() }}
 
-job_2:
-  build:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
+  job_2:
+    build:
+      
+      runs-on: ubuntu-latest
+      strategy:
+        matrix:
 
-        python-version: [ 3.7]
-    steps:
-      - name: Download math result for job 1
-        uses: actions/download-artifact@v2
-        run: |
-          cd fighterData
-          scrapy crawl fighterData -o fighterData.csv
-      - name: Upload math result for job 2
-        uses: actions/upload-artifact@v2
-        with:
-          name: fighterData
-          path: fighterData.csv
-  
+          python-version: [ 3.7]
+      steps:
+        - name: Download math result for job 1
+          uses: actions/download-artifact@v2
+          run: |
+            cd fighterData
+            scrapy crawl fighterData -o fighterData.csv
+        - name: Upload math result for job 2
+          uses: actions/upload-artifact@v2
+          with:
+            name: fighterData
+            path: fighterData.csv
+    
