@@ -36,10 +36,10 @@ jobs:
         scrapy crawl fighterdataLink -o fighterDataLink.csv
         ls
       #        python NueralNetwork.py > output.txt
-    - name: Upload pytest test results
+    - name: upload fighters stats link
       uses: actions/upload-artifact@v2
       with:
-        name: output.txt
-        path: Artifacts/output.txt
+        name: fighterdataLink.csv
+        path: fighterStatsLink/fighterdataLink.csv
       # Use always() to always run this step to publish test results when there are test failures
       if: ${{ always() }}
