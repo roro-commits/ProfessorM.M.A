@@ -42,7 +42,8 @@ jobs:
       if: ${{ always() }}
 
   job_2:
-   
+    name: Scrapin Fighter
+    needs: build
       
     runs-on: ubuntu-latest
     strategy:
