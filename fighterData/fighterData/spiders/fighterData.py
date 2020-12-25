@@ -3,7 +3,7 @@ import scrapy
 
 class FighterdataSpider(scrapy.Spider):
     name = 'fighterData'
-    f = open("/home/runner/work/ProfessorM.M.A/ProfessorM.M.A/fighterdataLink.csv")
+    f = open("ProfessorM.M.A/fighterdataLink.csv")
     start_urls = [url.strip() for url in f.readlines()[1:]]
     f.close
 
