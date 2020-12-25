@@ -29,7 +29,8 @@ jobs:
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name : run script
       run: |
-        cd
+        cd /ufc_data
+        ls
         scrapy crawl ufc_stats -o ufc_fighter_stats.csv
         ls
       #        python NueralNetwork.py > output.txt
