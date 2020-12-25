@@ -78,6 +78,7 @@ jobs:
         ls
         pwd
         scrapy crawl fighterData -o fighterData.csv
+
     - name: Upload math result for job 2
       uses: actions/upload-artifact@v2
       with:
