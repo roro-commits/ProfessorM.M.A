@@ -1,8 +1,8 @@
 from numpy.core.defchararray import array
 import numpy as np
 from calc.NN_calc import Nueral_calc as n_calc
-import  matplotlib.pyplot as mlp
-import  pandas as pd
+import matplotlib.pyplot as mlp
+import pandas as pd
 from sklearn.preprocessing import LabelEncoder as encoder
 
 
