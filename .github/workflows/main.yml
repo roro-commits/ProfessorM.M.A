@@ -74,6 +74,7 @@ jobs:
         ls
         pwd
         sudo cp -r fighterdataLink.csv /fighterData
+        cd /fighterData
         ls
         pwd
         scrapy crawl fighterData -o fighterData.csv
