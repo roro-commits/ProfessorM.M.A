@@ -71,14 +71,13 @@ jobs:
       uses: actions/download-artifact@v2
     - name: fighter datascrape
       run: |
-        ls
         pwd
+        ls
         sudo cp -r fighterdataLink.csv /fighterData
-        cd /fighterData
-        ls
+        cd fighterData
         pwd
+        ls
         scrapy crawl fighterData -o fighterData.csv
-
     - name: Upload math result for job 2
       uses: actions/upload-artifact@v2
       with:
