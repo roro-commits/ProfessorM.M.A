@@ -5,7 +5,7 @@ from scrapy.loader import ItemLoader
 class UfcFightSpider(scrapy.Spider):
     name = 'ufc_fight'
     # f = open("/home/rotimi/Documents/FYP/ProfessorM.M.A/ufc_data/fighters_name.csv")
-    f = open("/home/rotimi/Documents/FYP/ProfessorM.M.A/ufc_data/event_fights.csv")
+    f = open("ProfessorM.M.A/ufc_data/event_fights.csv")
     start_urls = [url.strip() for url in f.readlines()[1:]]
     f.close
 

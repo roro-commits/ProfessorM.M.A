@@ -3,7 +3,7 @@ import scrapy
 
 class EventFightsSpider(scrapy.Spider):
     name = 'event_fights'
-    f = open("/home/rotimi/Documents/FYP/ProfessorM.M.A/ufc_data/events_link.csv")
+    f = open("/ProfessorM.M.A/ufc_data/events_link.csv")
     start_urls = [url.strip() for url in f.readlines()[2:]]
     f.close
 

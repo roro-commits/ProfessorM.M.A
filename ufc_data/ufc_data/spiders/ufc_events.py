@@ -7,7 +7,7 @@ class UfcEventsSpider(scrapy.Spider):
     name = 'ufc_events'
     urls = []
     eventCounter = 0
-    f = open("/home/rotimi/Documents/FYP/ProfessorM.M.A/ufc_data/event_fights.csv")
+    f = open("/ProfessorM.M.A/ufc_data/event_fights.csv")
     start_urls = [url for url in f.readlines()[1:]]
     # urls.append(url)
     # start_urls = [url[0]]
