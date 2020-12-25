@@ -30,7 +30,7 @@ jobs:
     - name : run script
       run: |
         pwd
-        cd ufc_data 
+        cd ufcFighterData
         ls 
         pwd
         scrapy crawl ufc_stats -o ufc_fighter_stats.csv
