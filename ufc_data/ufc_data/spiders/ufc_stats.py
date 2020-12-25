@@ -21,7 +21,8 @@ class UfcStatsSpider(scrapy.Spider):
               
             for i in range(len(link)):
 
-               
+
+
                 data['Figter stats Link'] = link[i*3]
 
                     
