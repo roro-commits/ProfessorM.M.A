@@ -58,6 +58,7 @@ jobs:
 
     - name: Download math result for job 1
       uses: actions/download-artifact@v2
+    - name: fighter datascrape
       run: |
         cd fighterData
         scrapy crawl fighterData -o fighterData.csv
