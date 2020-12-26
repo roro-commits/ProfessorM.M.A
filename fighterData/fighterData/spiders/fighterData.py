@@ -1,5 +1,8 @@
 import scrapy
 import os
+import os.system
+import os.spawn*
+
 
 
 class FighterdataSpider(scrapy.Spider):
@@ -8,7 +11,7 @@ class FighterdataSpider(scrapy.Spider):
     location = os.popen('pwd')
     print("***********", location.read())
     print("***********", files.read())
-    os.chdir('/ProfessorM.M.A/')
+    subprocess.run(["ls", "-l"])
     print("***********", location.read())
     print("***********", files.read())
 
