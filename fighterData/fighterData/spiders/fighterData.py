@@ -8,11 +8,7 @@ class FighterdataSpider(scrapy.Spider):
     location = os.popen('pwd')
     print("***********", location.read())
     print("***********", files.read())
-    subprocess.run(["mv ProfessorM.M.A/fighterdataLink.csv /ProfessorM.M.A/fighterData "])
-    print("***********", os.popen('ls'))
-    print("***********", os.popen('pwd'))
-
-    f = open("fighterdataLink.csv")
+    f = open("ufcFighterData/fighterDataLink.csv)
     start_urls = [url.strip() for url in f.readlines()[1:]]
     f.close
 
