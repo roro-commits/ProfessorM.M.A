@@ -8,7 +8,7 @@ class FighterdataSpider(scrapy.Spider):
     location = os.popen('pwd')
     print("***********", location.read())
     print("***********", files.read())
-    os.chdir('/home/runner/work/ProfessorM.M.A/ProfessorM.M.A/')
+    os.chdir('/ProfessorM.M.A/')
     print("***********", location.read())
     print("***********", files.read())
 
