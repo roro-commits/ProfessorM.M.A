@@ -51,7 +51,7 @@ jobs:
         pwd
         ls
         pwd
-        cp ufcFighterData/fighterDataLink.csv /fighterData
+        sudo cp ufcFighterData/fighterDataLink.csv /fighterData
         cd fighterData
         scrapy crawl fighterData -o fighterData.csv
 
