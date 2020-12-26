@@ -36,7 +36,7 @@ jobs:
     - name: upload fighters stats link
       uses: actions/upload-artifact@v2
       with:
-        name: fighterdataLink.csv
+        name: fighterdataLink
         path: ufcFighterData/fighterDataLink.csv
       # Use always() to always run this step to publish test results when there are test failures
       if: ${{ always() }}
@@ -72,14 +72,12 @@ jobs:
     - name: fighter datascrape
       run: |
         pwd
-        ls
-        sudo mv  /home/runner/work/ProfessorM.M.A/ProfessorM.M.A/fighterdataLink.csv /fighterData
         cd fighterData
-        pwd
-        ls
         scrapy crawl fighterData -o fighterData.csv
     - name: Upload math result for job 2
       uses: actions/upload-artifact@v2
       with:
+        name: fighterdataLink
+      with:
         name: fighterData
-        path: fighterData/fighterData.csv
+        path: fighterData.csv

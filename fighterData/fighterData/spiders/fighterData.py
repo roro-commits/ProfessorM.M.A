@@ -1,8 +1,10 @@
 import scrapy
+import os
 
 
 class FighterdataSpider(scrapy.Spider):
     name = 'fighterData'
+    os.system('cd ..')
     f = open("fighterdataLink.csv")
     start_urls = [url.strip() for url in f.readlines()[1:]]
     f.close
