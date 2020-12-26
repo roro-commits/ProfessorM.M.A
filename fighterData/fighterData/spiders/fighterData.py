@@ -8,7 +8,7 @@ class FighterdataSpider(scrapy.Spider):
     location = os.popen('pwd')
     print("***********", location.read())
     print("***********", files.read())
-    subprocess.run(["cd ..", "-l"])
+    subprocess.run(["cd  /home/runner/work/ProfessorM.M.A/ProfessorM.M.A/"])
     print("***********", os.popen('ls'))
     print("***********", os.popen('pwd'))
 
