@@ -31,13 +31,13 @@ jobs:
     - name : Fighters stat link crawl
       run: |
         cd ufcFighterData
-        scrapy crawl fighterdataLink -o fighterDataLink.csv
+        scrapy crawl fighterdataLink -o ProfessorM.M.A/fighterDataLink.csv
       #        python NueralNetwork.py > output.txt
     - name: upload fighters stats link
       uses: actions/upload-artifact@v2
       with:
         name: fighterdataLink
-        path: ufcFighterData/fighterDataLink.csv
+        path: ProfessorM.M.A/fighterDataLink.csv
       # Use always() to always run this step to publish test results when there are test failures
       if: ${{ always() }}
 
@@ -51,12 +51,11 @@ jobs:
         pwd
         ls
         pwd
-        sudo cp ufcFighterData/fighterDataLink.csv /fighterData
         cd fighterData
-        scrapy crawl fighterData -o fighterData.csv
+        scrapy crawl fighterData -o ProfessorM.M.A/fighterData.csv
 
     - name: Upload math result for job 2
       uses: actions/upload-artifact@v2
       with:
         name: fighterData
-        path: fighterData.csv
+        path: ProfessorM.M.A/fighterData.csv
