@@ -2,8 +2,6 @@ import scrapy
 import os
 import subprocess
 
-
-
 class FighterdataSpider(scrapy.Spider):
     name = 'fighterData'
     files = os.popen('ls')
