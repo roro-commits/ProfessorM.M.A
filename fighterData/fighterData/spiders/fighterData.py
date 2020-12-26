@@ -1,7 +1,6 @@
 import scrapy
 import os
-import os.system
-import os.spawn*
+import subprocess
 
 
 
