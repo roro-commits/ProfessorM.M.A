@@ -57,5 +57,5 @@ jobs:
     - name: Upload math result for job 2
       uses: actions/upload-artifact@v2
       with:
-        name: fighterData
+        name: fighterDataStats
         path: ProfessorM.M.A/fighterData.csv
