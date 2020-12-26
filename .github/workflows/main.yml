@@ -72,6 +72,7 @@ jobs:
     - name: fighter datascrape
       with:
         name: fighterdataLink
+    - name:
       run: |
         pwd
         cd fighterData
