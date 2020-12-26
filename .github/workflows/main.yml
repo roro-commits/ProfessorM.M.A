@@ -49,7 +49,6 @@ jobs:
     - name: save fighter statistics
       run: |
         pwd
-        cd ..
         ls
         pwd
         cd fighterData
