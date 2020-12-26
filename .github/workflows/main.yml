@@ -72,7 +72,8 @@ jobs:
     - name: fighter datascrape
       with:
         name: fighterdataLink
-    - name:
+        
+    - name: save fighter statistics
       run: |
         pwd
         cd fighterData
