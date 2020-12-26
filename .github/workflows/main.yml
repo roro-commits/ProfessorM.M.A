@@ -73,7 +73,7 @@ jobs:
       run: |
         pwd
         ls
-        sudo mv -r /ProfessorM.M.A/fighterdataLink.csv /fighterData
+        sudo mv  /ProfessorM.M.A/fighterdataLink.csv /fighterData
         cd fighterData
         pwd
         ls
