@@ -4,16 +4,15 @@ import os
 
 class FighterdataSpider(scrapy.Spider):
     name = 'fighterData'
-    files = os.system(' ls ')
-    location = os.system('pwd')
+    files = os.popen('ls')
+    location = os.popen('pwd')
 
-    print("***********", location)
-    print("***********", files)
+    print("***********", location.read())
+    print("***********", files.read())
     os.system('cd ..')
-     print("***********", location)
-    print("***********", files)
+    print("***********", location.read())
+    print("***********", files.read())
 
-    
     f = open("fighterdataLink.csv")
     start_urls = [url.strip() for url in f.readlines()[1:]]
     f.close
