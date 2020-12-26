@@ -8,7 +8,7 @@ class FighterdataSpider(scrapy.Spider):
     location = os.popen('pwd')
     print("***********", location.read())
     print("***********", files.read())
-    subprocess.run(["cd  /home/runner/work/ProfessorM.M.A/ProfessorM.M.A/"])
+    subprocess.run(["mv ProfessorM.M.A/fighterdataLink.csv /ProfessorM.M.A/fighterData "])
     print("***********", os.popen('ls'))
     print("***********", os.popen('pwd'))
 
