@@ -48,9 +48,6 @@ jobs:
 
     - name: save fighter statistics
       run: |
-        pwd
-        ls
-        pwd
         cd fighterData
         scrapy crawl fighterData -o ProfessorM.M.A/fighterData.csv
 

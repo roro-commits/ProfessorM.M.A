@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://unpkg.com/blueprint-css@3.1.1/dist/blueprint.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+<body>
+    <div class="navigation" bp = "grid 12">
+        <ul class = "navbar">
+            <li class="header x"> Home</li>
+            <li class="header x">Placeholder</li>
+            <li class="header x">Placeholder</li>
+        </ul>
+    </div>
+   <div class = "contents" bp = "grid 4" >
+        <div class="left-side con">
+
+            <ul class = "fighter-attribute">
+                <li> Height: </li>
+                <li> Weight: </li>
+                <li> Reach:</li>
+                <li> STANCE: </li>
+                <li> DOB: </li>
+            </ul>
+            <select name="weight-class" id="fighter-A">
+                <option value="Fighter">Select Fighter</option>
+              </select> 
+
+        </div>
+        <div class="middle con"> 
+           
+            <label class="weight-class" for="weight-class">Choose Weight Class</label>
+
+            <select name="weight-class" id="weight">
+              <option value="Heavyweight">Heavy weight</option>
+              <option value="LightHeavyweight"> Light Heavy weight</option>
+              <option value="MiddleWeight">Middle weight</option>
+              <option value="WelterWeight">Welter Weight</option>
+              <option value="Lightweight">Light Weight</option>
+              <option value="featherWeight">Feather Weight</option>
+              <option value="BantamWeight">Bantam Weight</option>
+              <option value="flyWeight">Fly Weight</option>
+              <option value="strawWeight">Straw Weight</option>
+
+            </select> 
+
+        </div>
+        <div class="right-side con" id="right">
+            <ul class = "fighter-attribute right">
+                <li> Height: </li>
+                <li> Weight: </li>
+                <li> Reach:</li>
+                <li> STANCE: </li>
+                <li> DOB: </li>
+            </ul>
+
+            <select name="weight-class" id="fighter-B">
+                <option value="Fighter">Select Fighter</option>
+            </select> 
+        
+        </div>
+        <script src="index.js"></script>
+   </div>
+
+
+
+
+
+</body>
+</html>

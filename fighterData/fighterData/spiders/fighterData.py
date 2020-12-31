@@ -3,6 +3,7 @@ import os
 import subprocess
 
 class FighterdataSpider(scrapy.Spider):
+    
     name = 'fighterData'
     f = open("fighterDataLink.csv")
     start_urls = [url.strip() for url in f.readlines()[1:]]
