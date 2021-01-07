@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+
+</head>
+<body>
+    <p>Fighter A | Fighter B </p>
+    <form name ="form_values" value="none" id="form_value" method="POST" action="{{url_for('predict')}}">
+        <input id="submit_value" type="button",value="predict"> Click To Predict</input>
+        <div>
+         <input name="form" id="data" />
+        <select class="form-control selectpicker" id="Name" name ='ufc'>
+            <option value='none'>Name</option>
+        </select>
+        <select class="form-control selectpicker" id="Name2" name ='ufc'>
+            <option value='none'>Name</option>
+        </select>
+    </div>
+    </form>
+    <p id="result">{{prediction_text}}</p>
+    <script type="text/javascript" src="{{url_for('static', filename='jquery.js')}}"></script>
+    <script type="text/javascript" src="{{url_for('static', filename='data2.js')}}"></script>
+</body>
+</html>
