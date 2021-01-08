@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://unpkg.com/blueprint-css@3.1.1/dist/blueprint.min.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" rel="stylesheet" href="static/style.css">">
+    <link href="static/select2.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div class="navigation" bp="grid 12">
+        <ul class="navbar">
+            <li class="header x"> Home</li>
+            <li class="header x">Placeholder</li>
+            <li class="header x">Placeholder</li>
+        </ul>
+    </div>
+    <div class="contents" bp="grid 4">
+        <div class="left-side con">
+
+            <ul class="fighter-attribute" id="fighter-attributea">
+                <li class="height1"> Height: </li>
+                <li class="weight1"> Weight: </li>
+                <li class="reach1"> Reach:</li>
+                <li class="stance1"> STANCE: </li>
+                <li class="dob1"> DOB: </li>
+            </ul>
+            <select name="weight-class" id="Name">
+                <option value="none">Select Fighter</option>
+            </select>
+
+
+        </div>
+        <div class="middle con">
+
+            <label class="weight-class" for="weight-class">Choose Weight Class</label>
+
+            <select name="weight-class" id="weight">
+                <option value="Heavyweight">Heavy weight</option>
+                <option value="LightHeavyweight"> Light Heavy weight</option>
+                <option value="MiddleWeight">Middle weight</option>
+                <option value="WelterWeight">Welter Weight</option>
+                <option value="Lightweight">Light Weight</option>
+                <option value="featherWeight">Feather Weight</option>
+                <option value="BantamWeight">Bantam Weight</option>
+                <option value="flyWeight">Fly Weight</option>
+                <option value="strawWeight">Straw Weight</option>
+
+
+            </select>
+
+            <form name="form_values" value="none" id="form_value" method="POST" action="{{url_for('predict')}}">
+                <input name="form" id="data"> </input>
+            </form>
+
+            <button id="submit_value" type="button" ,value="predict"> Click To Predict </button>
+            <button id="submit_v" type="button" ,value="predic"> Click To Predict </button>
+
+            <p id="result">{{prediction_text}}</p>
+
+        </div>
+        <div class="right-side con" id="right">
+            <ul class="fighter-attribute right">
+                <li class="height2"> Height: </li>
+                <li class="weight2"> Weight: </li>
+                <li class="reach2"> Reach:</li>
+                <li class="stance2"> STANCE: </li>
+                <li class="dob2"> DOB: </li>
+            </ul>
+
+            <select name="weight-class" id="Name2">
+                <option value="none">Select Fighter</option>
+            </select>
+
+
+
+        </div>
+        <div bp="grid 12">
+            <div class="page-content page-container" id="page-content">
+                <div class="padding">
+                    <div class="row">
+                        <div class="container-fluid d-flex justify-content-center">
+                            <div class="col-sm-8 col-md-6">
+                                <div class="card">
+                                    <div class="card-header">Radar chart</div>
+                                    <div class="card-body" style="height: 420px">
+                                        <div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;">
+                                            <div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+                                                <div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div>
+                                            </div>
+                                            <div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+                                                <div style="position:absolute;width:200%;height:200%;left:0; top:0"></div>
+                                            </div>
+                                        </div> <canvas id="chart-line" width="299" height="200" class="chartjs-render-monitor" style="display: block; width: 299px; height: 200px;"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+
+ 
+
+
+    <script type="text/javascript" src="{{url_for('static', filename='index.js')}}"></script>
+    <script type="text/javascript" src="{{url_for('static', filename='jquery.js')}}"></script>
+    <script type="text/javascript" src="{{url_for('static', filename='data2.js')}}"></script>
+    <script type="text/javascript" src="static/select2.js"></script>
+    <script type="text/javascript" src="static/apexcharts.js"></script>
+    <script type="text/javascript" src="static/radarchart.js"></script>
+    <script type="text/javascript" src="static/Chart.bundle.min.js"></script>
+    <script src='https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js'></script>
+
+
+
+
+
+
+
+</body>
+
+</html>
