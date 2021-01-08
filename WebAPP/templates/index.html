@@ -19,7 +19,7 @@
     </div>
     <div class="contents" bp="grid 4">
         <div class="left-side con">
-
+            <p class="odds">FAVOURITE</p>
             <ul class="fighter-attribute" id="fighter-attributea">
                 <li class="height1"> Height: </li>
                 <li class="weight1"> Weight: </li>
@@ -62,6 +62,7 @@
 
         </div>
         <div class="right-side con" id="right">
+            <p class="odds right-odds">UNDERDOG</p>
             <ul class="fighter-attribute right">
                 <li class="height2"> Height: </li>
                 <li class="weight2"> Weight: </li>
@@ -70,12 +71,10 @@
                 <li class="dob2"> DOB: </li>
             </ul>
 
-            <select name="weight-class" id="Name2">
+            <select name="weight-class" id="Name2" style="display: block;">
                 <option value="none">Select Fighter</option>
             </select>
-
-
-
+            
         </div>
         <div bp="grid 12">
             <div class="page-content page-container" id="page-content">
@@ -84,7 +83,7 @@
                         <div class="container-fluid d-flex justify-content-center">
                             <div class="col-sm-8 col-md-6">
                                 <div class="card">
-                                    <div class="card-header">Radar chart</div>
+                                    <div class="card-header">Statistics chart</div>
                                     <div class="card-body" style="height: 420px">
                                         <div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;">
                                             <div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
@@ -93,7 +92,13 @@
                                             <div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
                                                 <div style="position:absolute;width:200%;height:200%;left:0; top:0"></div>
                                             </div>
-                                        </div> <canvas id="chart-line" width="299" height="200" class="chartjs-render-monitor" style="display: block; width: 299px; height: 200px;"></canvas>
+
+                                       </div> <canvas id="chart-line" width="299" height="200" class="chartjs-render-monitor" style="display: block; width: 299px; height: 200px;"></canvas>
+                                       <div class="stats-div">
+                                            <p class="stats">
+                                                hello world
+                                            </p>
+                                       </div>
                                     </div>
                                 </div>
                             </div>

@@ -65,30 +65,18 @@ $.getJSON(jsonUrl, function (datas) {
 
     }
 
+        $(".Document").ready(function() {
+            $('#Name2').select2( )
+            $('#Name').select2( )
 
-    $(document).ready(function() {
-        let data = name_set
-        let data2 = name_set2
+        })
+       
 
-        
-       $('#Name').select2( (data))
-    //    $('#Name2').select2( (data2))
-
-    });
-
-    // fighter_1.select2()
-    // $(document).ready(function() {
-        
-        
-    //     $('#Name2').select2((  data = name_set2 ));
-    // });
-  
-
-
-    //   $('#height1').html( '')
 
 
       $('#Name').change(function(){
+        $('#Name').select2( (name_set))
+
         let fighter_id = $(this).children(":selected").attr("id");
 
             $('li.height1').text(height+ data_list[fighter_id].HEIGHT);
@@ -140,9 +128,98 @@ $.getJSON(jsonUrl, function (datas) {
             // $('#submit_value').click()
             let radar_one = []
             let radar_two = []
-            
-            
+            radar_one.push(fighter_one.slice(1,2).concat(fighter_one.slice(3 ,4)).concat(fighter_one.slice(6,13)));
+            radar_two.push(fighter_two.slice(1,2).concat(fighter_two.slice(3 ,4)).concat(fighter_two.slice(6,13)));
+            radar_one[0][0] = radar_one[0][0] * 30
+            radar_two[0][0] = radar_two[0][0] * 30
+            radar_one[0][2] = radar_one[0][2] * 10
+            radar_two[0][2] = radar_two[0][2] * 10
+            radar_one[0][4] = radar_one[0][4] * 10
+            radar_two[0][4] = radar_two[0][4] * 10
+            radar_one[0][6] = radar_one[0][6] * 10
+            radar_two[0][6] = radar_two[0][6] * 10
 
+            // radar_one.push()
+        
+            console.log(radar_one[0])
+            
+            function convertRange( value, min , max) { 
+                
+                for (let i = 0; i < value[0].length; i++) 
+                {
+                    if(max - min === 0) return 1;
+                    value[0][i] = (value[0][i] - min) / (max - min);
+
+                }
+                return value;
+            };
+            // var num = scale(.25, 0, 1, 0, 100);
+
+                // ChartJS Chart Modified to fit my code 
+
+            let chart = convertRange(radar_one ,2 ,10)
+            let chart2 = convertRange(radar_two ,2 ,10)
+            console.log(chart ,"kk")
+
+                var ctx = $("#chart-line");
+                var myLineChart = new Chart(ctx, {
+                    type: 'radar',
+                    data: {
+                        labels: ['HEIGHT', 'REACH', 'SLpM', 'StrAcc', 'SApM', 'StrDef', 'TDAvg','TDAcc','TDDef','SubAvg'],
+                        fontStyle: "bold",
+                        fontColor: 'red',
+                        datasets: [{
+                            data: chart[0],
+                            label: "FAVOURITE",
+                            borderColor: "#458af7",
+                            backgroundColor: '#e0d316',
+                            fill: true,
+                            fontColor: 'black',
+                            pointHoverBorderColor: '#eb4034',
+                        }, {
+                            data: chart2[0],
+                            label: "UNDERDOG",
+                            borderColor: "#f54242",
+                            fill: true,
+                            backgroundColor: '#3cba9f'
+                        }]
+                    },
+                    options: {
+                        
+                            legend: false,
+                            gridLines: {
+                               display: false,
+                            },
+                            labels: {
+                                // This more specific font property overrides the global property
+                                fontColor: 'red',
+                                defaultFontSize: 13
+                            },
+                            scale: {
+                              angleLines: {
+                                color: 'white'
+                              },
+                              gridLines: {
+                                color: 'white'
+                              },
+                              pointLabels :{
+                                fontColor: '#333',
+                                fontFamily: "'Raleway', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif",
+                                fontSize: 12,
+                                fontStyle: 600,
+                              },
+                              ticks: {
+                                suggestedMin: 0,
+                                suggestedMax: 10,
+                                display: false,
+                                maxTicksLimit: 5
+                              }
+                            }
+                          
+                        
+                    
+                    }
+                });
 
         }
       })
@@ -150,9 +227,9 @@ $.getJSON(jsonUrl, function (datas) {
 
 
      $('#Name2').change(function(){
-
-
+        $('#Name2').select2( (name_set2))
         let fighter_id = $(this).children(":selected").attr("id");
+            
 
             $('li.height2').text(height1+ data_list[fighter_id].HEIGHT);
             $('li.weight2').text(weight1+ data_list[fighter_id].WEIGHT);
@@ -203,8 +280,8 @@ $.getJSON(jsonUrl, function (datas) {
             let radar_two = []
             radar_one.push(fighter_one.slice(1,2).concat(fighter_one.slice(3 ,4)).concat(fighter_one.slice(6,13)));
             radar_two.push(fighter_two.slice(1,2).concat(fighter_two.slice(3 ,4)).concat(fighter_two.slice(6,13)));
-            radar_one[0][0] = radar_one[0][0] * 10
-            radar_two[0][0] = radar_two[0][0] * 10
+            radar_one[0][0] = radar_one[0][0] * 30
+            radar_two[0][0] = radar_two[0][0] * 30
             radar_one[0][2] = radar_one[0][2] * 10
             radar_two[0][2] = radar_two[0][2] * 10
             radar_one[0][4] = radar_one[0][4] * 10
@@ -230,15 +307,10 @@ $.getJSON(jsonUrl, function (datas) {
 
 
 
-            let chart = convertRange(radar_one ,2 ,10)
-            let chart2 = convertRange(radar_two ,2 ,10)
-            console.log(chart ,"kk")
-
-
-
-
-
-            $(document).ready(function() {
+                let chart = convertRange(radar_one ,2 ,10)
+                let chart2 = convertRange(radar_two ,2 ,10)
+                console.log(chart ,"kk")
+                // ChartJS Chart Modified to fit my code 
                 var ctx = $("#chart-line");
                 var myLineChart = new Chart(ctx, {
                     type: 'radar',
@@ -264,10 +336,13 @@ $.getJSON(jsonUrl, function (datas) {
                         title: {
                             display: true,
                             text: ''
+                        },
+                        font: {
+                            size: 14,
                         }
                     }
                 });
-            });
+            
 
                 }
             })
@@ -276,7 +351,12 @@ $.getJSON(jsonUrl, function (datas) {
         console.log("new_value",$('#data').val())
 
         $('#submit_value').click(function(){
-      
+
+            // if ($('data').val().length > 14){
+
+            //     $('#form_value').submit();
+            // }
+            
             let fight_data = fighter_one.concat(fighter_two);
             // console.log(fight_data)
     
@@ -284,6 +364,9 @@ $.getJSON(jsonUrl, function (datas) {
                 $('#data').val(fight_data);
                 $('#form_value').submit();
             }
+            
+      
+           
     
     
         console.log(jsonUrl);

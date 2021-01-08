@@ -57,6 +57,7 @@
 }
 .weight-class
 {
+    margin-top: 10px;
     align-items: center;
     justify-content: center;
 }
@@ -76,10 +77,11 @@ body {
 }
 
 .fighter-attribute li {
+    margin-bottom: 10px;
     width:450px;
     font-size: 1em;
     list-style-type: none;
-    margin-top: 10px;
+    margin-top: 3px;
     padding:1px;
     background-color: aquamarine;
     color: black;
@@ -91,11 +93,11 @@ body {
     width: 80%;
 }
 
-#right{
+/* #right{
   clear: both;
   float: right;
   overflow: hidden;
-}
+} */
 
 canvas {
     -moz-user-select: none;
@@ -117,8 +119,8 @@ canvas {
   }
   
   #chartjs-radar{
-    width : 60%;
-    height: 60%;
+    width : 30%;
+    height: 30%;
   }
   
   .chartjs-tooltip-key {
@@ -168,7 +170,7 @@ canvas {
     display: flex;
     flex-direction: column;
     min-width: 0;
-    height: 1450px;
+    height: 1560px;
     word-wrap: break-word;
     background-color: #fff;
     background-clip: border-box;
@@ -195,7 +197,23 @@ card-footer,
     : padding-box
 }
 
-/* #Name2{
-    padding: .75rem;
-    height: 100%;
-} */
+#Name2{
+    margin-top: 10px;
+}
+
+.odds{
+    width:245px;
+    font-size:40px;
+    font-weight:bold;
+    padding:5px;
+    background-color:aquamarine;
+
+}
+.right-odds{
+    align-items: flex-end;
+    justify-content: right;
+}
+
+.stats{
+    color:red;
+}
