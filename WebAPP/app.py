@@ -110,7 +110,7 @@ def predict():
             # print(prediction[0].round(), flush=True)
             output = (prediction [0]* 100 )
             print(output, flush=True)
-            return render_template('index.html', prediction_text="Prediction: Chance Fighter A {}%".format(output))
+            return render_template('index.html', UNDERDOG= "{} %".format(output[0]),FAVOURITE = "{} %".format(output[1]))
 
         else:
             print("Did not get dataset", flush=True)

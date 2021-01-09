@@ -4,7 +4,7 @@
 
 let bodyBackGround = document.querySelector('body');
 
-document.body.style.backgroundImage = "url('/static/Img/gettyimages-1096832854-2048x2048.jpeg')"; 
+document.body.style.backgroundImage = "url('/static/Img/gettyimages-1096832854-2048x2048.jpeg')"
 
 //function
 
