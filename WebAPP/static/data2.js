@@ -160,7 +160,8 @@ $.getJSON(jsonUrl, function (datas) {
             let chart = convertRange(radar_one ,2 ,10)
             let chart2 = convertRange(radar_two ,2 ,10)
             console.log(chart ,"kk")
-
+            
+            $('#stats').append( '< p > SLpM - Significant Strikes Landed per Minute "' <br>+ '" Str. Acc. - Significant Striking Accuracy "' <br>+ '" SApM - Significant Strikes Absorbed per Minute  "' <br>+ '"Str. Def. - Significant Strike Defence (the % of opponents strikes that did not land) "' <br>+ '"TD Avg. - Average Takedowns Landed per 15 minutes  "' <br>+ '"TD Acc. - Takedown Accuracy "' <br>+ '"Str. Def. - Significant Strike Defence (the % of opponents strikes that did not land) "' <br>+ '"TD Avg. - Average Takedowns Landed per 15 minutes  "' <br>+ '"TD Def. - Takedown Defense (the % of opponents TD attempts that did not land) "' <br>+ '"Str. Def. - Significant Strike Defence (the % of opponents strikes that did not land) "' <br>+ '"TD Avg. - Average Takedowns Landed per 15 minutes  "' <br>+ '" Sub. Avg. - Average Submissions Attempted per 15 minutes </ p >')
                 var ctx = $("#chart-line");
                 var myLineChart = new Chart(ctx, {
                     type: 'radar',
@@ -215,12 +216,9 @@ $.getJSON(jsonUrl, function (datas) {
                                 maxTicksLimit: 5
                               }
                             }
-                          
-                        
-                    
                     }
                 });
-
+                   
         }
       })
 

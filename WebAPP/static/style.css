@@ -170,9 +170,10 @@ canvas {
     display: flex;
     flex-direction: column;
     min-width: 0;
-    height: 1560px;
+    height: 1600px;
     word-wrap: break-word;
     background-color: #fff;
+    color:red;
     background-clip: border-box;
     border: 1px solid rgba(19, 24, 44, .125);
     border-radius: .25rem
