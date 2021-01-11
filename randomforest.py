@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split, RepeatedStratifiedKFold
 import seaborn as sns
-from sklearn.ensemble import RandomForestRegressor
+from sklearn.ensemble import RandomForestClassifier
 from sklearn.preprocessing import LabelEncoder as encoder, MinMaxScaler
 from sklearn.model_selection import cross_val_score
 from sklearn.metrics import classification_report, confusion_matrix, accuracy_score
@@ -11,7 +11,7 @@ import pickle as DataStore
 
 # from sklearn.metrics import confusion_matrix
 
-UFC_data = pd.read_csv('clean_dataset.csv')
+UFC_data = pd.read_csv('/home/lol/Desktop/new/ProfessorM.M.A/WebAPP/clean_dataset.csv')
 UFC_data['STANCE'].value_counts().plot(kind='bar', color = 'green')
 plt.show()
 
@@ -52,7 +52,7 @@ labels = UFC_data['WIN']
 
 X_train, X_test, y_train, y_test = train_test_split(x_data, labels, test_size=0.33, random_state=200)
 
-rfc = RandomForestRegressor(n_estimators=20, random_state=0)
+rfc = RandomForestClassifier(n_estimators=20, random_state=0)
 rfc.fit(X_train, y_train)
 
 

@@ -86,7 +86,7 @@ def predict():
             UFC_data = UFC_data.drop(['NAME1'], axis=1)
             UFC_data = UFC_data.drop('WIN', axis=1)
 
-            cols_to_norm = ['HEIGHT', 'STANCE', 'WEIGHT', 'REACH', 'DOB', 'SLpM', 'StrAcc',
+            cols_to_norm  = ['HEIGHT', 'STANCE', 'WEIGHT', 'REACH', 'DOB', 'SLpM', 'StrAcc',
                             'SApM', 'StrDef', 'TDAvg', 'TDAcc', 'TDDef', 'SubAvg',
                             'HEIGHT1', 'STANCE1', 'WEIGHT1', 'REACH1', 'DOB1',
                             'SLpM1', 'StrAcc1', 'SApM1', 'StrDef1', 'TDAvg1', 'TDAcc1',
