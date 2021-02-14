@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split, RepeatedStratifiedKFold
-import seaborn as sns
+# import seaborn as sns
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.preprocessing import LabelEncoder as encoder, MinMaxScaler
 from sklearn.model_selection import cross_val_score
@@ -11,7 +11,7 @@ import pickle as DataStore
 
 # from sklearn.metrics import confusion_matrix
 
-UFC_data = pd.read_csv('/home/lol/Desktop/new/ProfessorM.M.A/WebAPP/clean_dataset.csv')
+UFC_data = pd.read_csv('WebAPP/clean_dataset.csv')
 UFC_data['STANCE'].value_counts().plot(kind='bar', color = 'green')
 plt.show()
 
@@ -22,6 +22,7 @@ UFC_data.drop(UFC_data.index[[5372,5832,5838,5853,4112,4496, 4590, 4709, 4773, 4
 
 
 
+UFC_data = UFC_data.dropna()
 
 UFC_data['STANCE'] = encoder().fit_transform(UFC_data['STANCE'])
 UFC_data['STANCE1'] = encoder().fit_transform(UFC_data['STANCE1'])
@@ -30,7 +31,6 @@ UFC_data = UFC_data.drop(['NAME'], axis=1)
 UFC_data = UFC_data.drop(['NAME1'], axis=1)
 # UFC_data = UFC_data.drop(['AvgTime2Win.1'], axis=1)
 # UFC_data = UFC_data.drop(['AvgTime2Win'], axis=1)
-UFC_data = UFC_data.dropna()
 
 cols_to_norm = ['HEIGHT', 'STANCE', 'WEIGHT', 'REACH', 'DOB', 'SLpM', 'StrAcc',
                 'SApM', 'StrDef', 'TDAvg', 'TDAcc', 'TDDef', 'SubAvg',
@@ -73,7 +73,7 @@ print('Accuracy: %.3f (%.3f)', accuracy_score(y_test, prediction.round()))
 conf_mat = confusion_matrix(y_test, prediction.round())
 print("=== Confusion Matrix ===")
 print(conf_mat)
-sns.heatmap(conf_mat,  annot=True)
+# sns.heatmap(conf_mat,  annot=True)
 plt.show()
 # score = []
 #
