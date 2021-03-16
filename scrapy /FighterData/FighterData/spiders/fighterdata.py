@@ -4,7 +4,7 @@ import scrapy
 class FighterdataSpider(scrapy.Spider):
     name = 'fighterdata'
 # f = open("/home/rotimi/Documents/FYP/ProfessorM.M.A/ufc_data/fighters_name.csv")
-    f = open("/home/lol/Desktop/scrapy /UFC/fighters_name.csv")
+    f = open("/home/roroblacc/Desktop/FYP/ProfessorM.M.A/scrapy /UFC/fighters_name.csv")
     start_urls = [url.strip() for url in f.readlines()[1:]]
     f.close
 

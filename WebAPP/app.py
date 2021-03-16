@@ -1,13 +1,29 @@
 import numpy as np
+import torch
 from flask import Flask, request, jsonify, render_template
 import pickle
 import pandas as pd
 from sklearn.preprocessing import LabelEncoder as encoder, MinMaxScaler
-
-
+from NueralNetwork_M import Net
 
 app = Flask(__name__)
-model = pickle.load(open('model.pkl', 'rb'))
+model = pickle.load(open('savedModel/model.pkl', 'rb'))
+
+PATH = "savedModel/p_Nueralnet.pth"
+# model_pyt = Net()
+# model_pyt.load_state_dict(torch.load(PATH))
+# model_pyt.eval()
+
+##### entire model
+model_pyt = torch.load(PATH)
+model_pyt.eval()
+
+
+def getPrediction(tensor):
+    input_x = torch.tensor(tensor)
+    input_x = input_x.type(torch.FloatTensor)
+    output = model_pyt.forward(input_x)
+    return output
 
 
 # class ufc(db.Model):
@@ -23,7 +39,6 @@ model = pickle.load(open('model.pkl', 'rb'))
 def home():
     print("ccheking2", flush=True)
     return render_template('index.html')
-
 
 
 @app.route('/predict', methods=['GET', 'POST'])
@@ -86,7 +101,7 @@ def predict():
             UFC_data = UFC_data.drop(['NAME1'], axis=1)
             UFC_data = UFC_data.drop('WIN', axis=1)
 
-            cols_to_norm  = ['HEIGHT', 'STANCE', 'WEIGHT', 'REACH', 'DOB', 'SLpM', 'StrAcc',
+            cols_to_norm = ['HEIGHT', 'STANCE', 'WEIGHT', 'REACH', 'DOB', 'SLpM', 'StrAcc',
                             'SApM', 'StrDef', 'TDAvg', 'TDAcc', 'TDDef', 'SubAvg',
                             'HEIGHT1', 'STANCE1', 'WEIGHT1', 'REACH1', 'DOB1',
                             'SLpM1', 'StrAcc1', 'SApM1', 'StrDef1', 'TDAvg1', 'TDAcc1',
@@ -98,6 +113,11 @@ def predict():
             # print(UFC_data.iloc[-1])
             toPredict = np.asarray(UFC_data.iloc[-1]).reshape(1, -1)
 
+            pyt = getPrediction(toPredict);
+            sm = torch.nn.Sigmoid()
+            probabilities = sm(pyt)
+            print("!!!!!!!!!!!pytorch", pyt.round(),probabilities, flush=True)
+
             # # result = result.apply(lambda x: (x - x.min()) / (x.max() - x.min()))
             # print("Datasets2", df, flush=True)
             # # final_features = np.hstack(df)
@@ -108,9 +128,9 @@ def predict():
             prediction = model.predict_proba(toPredict)
             output = prediction
             # print(prediction[0].round(), flush=True)
-            output = (prediction [0]* 100 )
+            output = (prediction[0] * 100)
             print(output, flush=True)
-            return render_template('index.html', UNDERDOG= "{} %".format(output[0]),FAVOURITE = "{} %".format(output[1]))
+            return render_template('index.html', UNDERDOG="{} %".format(output[0]), FAVOURITE="{} %".format(output[1]))
 
         else:
             print("Did not get dataset", flush=True)
@@ -122,7 +142,6 @@ def predict():
         return render_template('index.html')
     else:
         return render_template('index.html')
-
 
 
 @app.route('/predict_api', methods=['POST'])
