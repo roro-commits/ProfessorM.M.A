@@ -2,12 +2,14 @@ import numpy as np
 import torch
 from flask import Flask, request, jsonify, render_template
 import pickle
+import joblib
 import pandas as pd
 from sklearn.preprocessing import LabelEncoder as encoder, MinMaxScaler
 from NueralNetwork_M import Net
+import xgboost
 
 app = Flask(__name__)
-model = pickle.load(open('savedModel/model.pkl', 'rb'))
+model = pickle.load(open('savedModel/RandModel.pkl', 'rb'))
 
 PATH = "savedModel/p_Nueralnet.pth"
 # model_pyt = Net()
@@ -15,9 +17,20 @@ PATH = "savedModel/p_Nueralnet.pth"
 # model_pyt.eval()
 
 ##### entire model
-model_pyt = torch.load(PATH)
+# model_pyt = torch.load(PATH)
+# model_pyt.eval()
+
+model_pyt = Net()
+model_pyt.load_state_dict(torch.load(PATH))
 model_pyt.eval()
 
+# # Loading the Xgb Boost Model
+# xgbModel = pickle.load(open("savedModel/XGBboostModel.dat", "rb"))
+xgbModel = joblib.load(open("savedModel/joblibXGBboostModel.dat", "rb"))
+
+
+# xgbModel = xgboost.Booster({'n_thread':4})
+# xgbModel.load_model("savedModel/XGBboost.model")
 
 def getPrediction(tensor):
     input_x = torch.tensor(tensor)
@@ -51,8 +64,8 @@ def predict():
 
         if 'form' in request.form:
 
-            # after receving data
-            print("recived data", flush=True)
+            # after receiving data
+            print("receiving data", flush=True)
             data = request.form['form']
             # dataset = [x for x in data]
             dataset = lambda x: list(x.split(","))
@@ -113,10 +126,13 @@ def predict():
             # print(UFC_data.iloc[-1])
             toPredict = np.asarray(UFC_data.iloc[-1]).reshape(1, -1)
 
-            pyt = getPrediction(toPredict);
-            sm = torch.nn.Sigmoid()
-            probabilities = sm(pyt)
-            print("!!!!!!!!!!!pytorch", pyt.round(),probabilities, flush=True)
+            # Pytorch Probabilities
+            pyt = getPrediction(toPredict)
+            print("!!!!!!!!!!!pytorch", pyt.round(), flush=True)
+
+            # XGB Prediction
+            xgbPrediction = xgbModel.predict_proba(toPredict)
+            print("XGB Boost prediction", xgbPrediction, flush=True)
 
             # # result = result.apply(lambda x: (x - x.min()) / (x.max() - x.min()))
             # print("Datasets2", df, flush=True)
@@ -125,12 +141,14 @@ def predict():
             # # print(type(final_features))
             # # df = pd.DataFrame(final_features)
             # # print("#result", result)
+
+            ## Random \Forest prediction
             prediction = model.predict_proba(toPredict)
             output = prediction
             # print(prediction[0].round(), flush=True)
             output = (prediction[0] * 100)
             print(output, flush=True)
-            return render_template('index.html', UNDERDOG="{} %".format(output[0]), FAVOURITE="{} %".format(output[1]))
+            return render_template('index.html', UNDERDOG="{} %".format(output[0].round()), FAVOURITE="{} %".format(output[1].round()))
 
         else:
             print("Did not get dataset", flush=True)

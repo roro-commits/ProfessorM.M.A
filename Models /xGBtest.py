@@ -1,7 +1,9 @@
+import pickle
+
 import pandas as pd
 import numpy as np
 import xgboost as xgb
-from sklearn.model_selection import train_test_split
+from sklearn.model_selection import train_test_split, cross_val_score, KFold
 import matplotlib.pyplot as plt
 from sklearn.preprocessing import LabelEncoder as encoder, MinMaxScaler
 from xgboost import plot_tree
@@ -9,8 +11,10 @@ from sklearn.metrics import balanced_accuracy_score, roc_auc_score, make_scorer
 from sklearn.model_selection import GridSearchCV
 from sklearn.metrics import confusion_matrix
 from sklearn.metrics import plot_confusion_matrix
+import joblib
 
-UFC_data = pd.read_csv('../WebAPP/clean_dataset.csv')
+
+UFC_data = pd.read_csv('/home/roroblacc/Desktop/test/ProfessorM.M.A/WebAPP/clean_dataset.csv')
 UFC_data['STANCE'].value_counts().plot(kind='bar', color='green')
 # plt.show()
 
@@ -58,27 +62,35 @@ model = xgb.XGBClassifier(objective="binary:logistic",
                           scale_pos_weight=3,
                           subsample=0.8,
                           colsample_bytree=0.3,
+                          use_label_encoder=False,
+                          eval_metric="error"
                           )
 model.fit(X_train, y_train, verbose=True, early_stopping_rounds=10, eval_metric='aucpr', eval_set=[(X_test, y_test)])
 
 plot_confusion_matrix(model, X_test, y_test, values_format='d', display_labels=["Loose", "Win"])
 
-
-plt.figure(figsize=(12,12))
-plot_tree(model)
+plt.figure(figsize=(12, 12))
+# plot_tree(model)
 plt.savefig('tree_high_dpi', dpi=300)
 plt.show()
 
+# pickle.dump(model, open("XGBboostModel.dat", "wb"))
+joblib.dump(model, open("joblibXGBboostModel.dat", "wb"))
+# model.save_model("XGBboost.model")
+
 def_two = np.asarray(x_data.iloc[9].values).reshape(1, -1)
-single  = model.predict_proba(def_two)
+single = model.predict_proba(def_two)
 
 # print("data 2",x_data)
 
 # single_no = model.predict(def_two)
 
-print("prediciting single data",single)
+print("prediciting single data", single)
 print("predicting none")
 
+kfold = KFold(n_splits=10)
+results = cross_val_score(model, X_test, y_test, cv=kfold)
+print("Accuracy: %.2f%% (%.2f%%)" % (results.mean() * 100, results.std() * 100))
 
 # # Grid Search Parameters
 # grid_search_params = {
