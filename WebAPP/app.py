@@ -67,23 +67,25 @@ def predict():
             # after receiving data
             print("receiving data", flush=True)
             data = request.form['form']
-            # dataset = [x for x in data]
+            # dataset = [x for x in data] stored in a list
             dataset = lambda x: list(x.split(","))
             dataset = dataset(data)
             print("Datasets", dataset, flush=True)
-            print("Datasets", dataset[0], flush=True)
+            print("Datasets 2", dataset[0], flush=True)
+
             # idex not to conver = 0,4,14,18
-            # Convert for adding to data frame
+            # Convert for adding to data frame  # convert to float excluding name stance on both side to be removed or with one hot encoder
             for x in range(0, len(dataset)):
                 if (x == 0) or (x == 4) or (x == 14) or (x == 18):
                     pass
                 else:
                     dataset[x] = float(dataset[x])
                     print(dataset[x])
+
             # apppend one for extra column for dataframe to be dropped later 
             dataset.append(1)
-            print("Datasets", dataset, flush=True)
-            print("Datasets", type(dataset[1]), flush=True)
+            print("Datasets check", dataset, flush=True)
+            print("Datasets check for float ", type(dataset[1]), flush=True)
 
             # df = pd.DataFrame(dataset)
             # # df.replace(stance)
@@ -123,8 +125,16 @@ def predict():
             UFC_data['STANCE'].value_counts().plot(kind='bar', color="red")
             scaler = MinMaxScaler()
             UFC_data[cols_to_norm] = scaler.fit_transform(UFC_data[cols_to_norm])
-            # print(UFC_data.iloc[-1])
+
+            #################### Prediction Data #################
+            print("Prediction  Data raw ")
+            print(UFC_data.iloc[-1])
+            print(len(UFC_data.iloc[-1]))
             toPredict = np.asarray(UFC_data.iloc[-1]).reshape(1, -1)
+            print("Prediction  Data Processed ")
+            print(toPredict)
+
+
 
             # Pytorch Probabilities
             pyt = getPrediction(toPredict)
@@ -147,8 +157,9 @@ def predict():
             output = prediction
             # print(prediction[0].round(), flush=True)
             output = (prediction[0] * 100)
-            print(output, flush=True)
-            return render_template('index.html', UNDERDOG="{} %".format(output[0].round()), FAVOURITE="{} %".format(output[1].round()))
+            print("Random Forest Prediction ", output, flush=True)
+            return render_template('index.html', UNDERDOG="{} %".format(output[0].round()),
+                                   FAVOURITE="{} %".format(output[1].round()))
 
         else:
             print("Did not get dataset", flush=True)
