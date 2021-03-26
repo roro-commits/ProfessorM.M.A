@@ -1,0 +1,82 @@
+.App {
+  margin: 0 auto;
+  background-color: #E2E4E6;
+  
+}
+
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+.list-item {
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: 700;
+  /* margin-bottom: 0.5em; */
+  /* padding: 0.5em; */
+  color: #5e6b74;
+  justify-items: center;
+  padding-left: 10px;
+
+
+}
+.li-item{
+  height: 40px;
+  width: 440px;
+  background-color: #FFFFFF;
+  border-top-left-radius: 0.2em;
+  border-top-right-radius: 0.2em;
+  border-bottom-left-radius: 0.2em;
+  border-bottom-right-radius: 0.2em;
+
+}
+.container {
+
+  padding: 5px;
+  width: 500px;
+  margin: 0 auto;
+  /* margin-left: 10px; */
+  /* margin-top: 10px; */
+  margin-bottom: 0px;
+  background-color: #E2E4E6;
+}
+
+.list-con{
+  margin-bottom: 0px;
+  margin-top: 0px;
+  list-style: none;
+
+}
+
+
+.title{
+
+color: #8C8C8C;
+font-weight: bold;
+list-style: none;
+padding-left: 50px;
+margin: 10px;
+
+
+}
+
+.option 
+{
+ padding-bottom: 1px;
+display: flex;
+padding-left: 450px;
+color: #8C8C8C;
+
+
+}

@@ -59,6 +59,7 @@ def predict():
     '''
     Renders result in HTML
     '''
+    global randomForestWinFav, randomForestWinTwoUnd
     if request.method == 'POST':
         print("test1", flush=True)
 
@@ -130,19 +131,38 @@ def predict():
             print("Prediction  Data raw ")
             print(UFC_data.iloc[-1])
             print(len(UFC_data.iloc[-1]))
+
             toPredict = np.asarray(UFC_data.iloc[-1]).reshape(1, -1)
-            print("Prediction  Data Processed ")
+            print("system check")
             print(toPredict)
+            print("length")
+            print(len(toPredict[0]))
+            toPredictReverseOne = UFC_data.iloc[-1][0:13]
+            toPredictReverseTwo = UFC_data.iloc[-1][13:]
+            topredictTwo = []
+            ######## revresing the Data for Fav and underdog ########
+            [topredictTwo.append(x) for x in toPredictReverseTwo]
+            [topredictTwo.append(x) for x in toPredictReverseOne]
+            topredictTwo = np.asarray(topredictTwo).reshape(1, -1)
+            # topredictTwo = np.asarray(topredictTwo)
+            print("Testing ")
+            print(topredictTwo)
 
-
+            # print("to predict 2", toPredictTwo, flush=True)
+            # print("Prediction  Data Processed ", flush=True)
+            # print("testing!!!!!!!!!!!!",toPredictReverseOne)
+            # print("testing!!!!!!!!!!!!",toPredictReverseTwo)
 
             # Pytorch Probabilities
             pyt = getPrediction(toPredict)
+            pytTwo = getPrediction(topredictTwo)
             print("!!!!!!!!!!!pytorch", pyt.round(), flush=True)
 
             # XGB Prediction
+            xgbPredictionTwo = xgbModel.predict_proba(topredictTwo)
             xgbPrediction = xgbModel.predict_proba(toPredict)
             print("XGB Boost prediction", xgbPrediction, flush=True)
+            print("XGB Boost prediction Two", xgbPredictionTwo, flush=True)
 
             # # result = result.apply(lambda x: (x - x.min()) / (x.max() - x.min()))
             # print("Datasets2", df, flush=True)
@@ -154,19 +174,92 @@ def predict():
 
             ## Random \Forest prediction
             prediction = model.predict_proba(toPredict)
-            output = prediction
+            outputRandForest = prediction
+            predictionTwo = model.predict_proba(topredictTwo)
+            outputRandForestTwo = predictionTwo
             # print(prediction[0].round(), flush=True)
-            output = (prediction[0] * 100)
-            print("Random Forest Prediction ", output, flush=True)
-            return render_template('index.html', UNDERDOG="{} %".format(output[0].round()),
-                                   FAVOURITE="{} %".format(output[1].round()))
+            # outputRandForest = (prediction[0] * 100)
+            print("Random Forest Prediction ", outputRandForest, flush=True)
+            print("Random Forest Prediction ", outputRandForestTwo, flush=True)
+
+
+            ######### Predictions #########
+            # random forest win and loss ratio
+            randomForestLossFav = outputRandForest[0][0]
+            randomForestWinFav = outputRandForest[0][1]
+            randomForestLossTwoUnd = outputRandForestTwo[0][0]
+            randomForestWinTwoUnd = outputRandForestTwo[0][1]
+
+            # xvg boost prediction
+            xgbLossFav = xgbPrediction[0][0]
+            xgbWinFav = xgbPrediction[0][1]
+            xgbLossTwoUnd = xgbPredictionTwo[0][0]
+            xgbWinTwoUnd = xgbPredictionTwo[0][1]
+
+            # pytorch prediction
+            pyt_pred = pyt
+            pyt_predTwo = pytTwo
+
+            ####### Voting System #############
+            fav = (randomForestWinFav + xgbWinFav) / 2
+            favloss = (randomForestLossFav + xgbLossFav) / 2
+            und = (randomForestWinTwoUnd + xgbWinTwoUnd) / 2
+            undLoss = (randomForestLossTwoUnd + xgbLossTwoUnd) / 2
+            fav_Score = 0
+            und_score = 0
+
+            #Random Forest Vote
+            if randomForestWinFav > randomForestWinTwoUnd:
+                fav_Score += 1
+
+            elif randomForestWinTwoUnd > randomForestWinFav:
+                und_score += 1
+            else:
+                fav_Score += 0.5
+                und_score += 0.5
+            # Xgb Vote
+            if xgbWinFav > xgbWinTwoUnd:
+                fav_Score += 1
+            elif xgbWinTwoUnd > xgbWinFav:
+                und_score += 1
+            else:
+                fav_Score += 0.5
+                und_score += 0.5
+            # Pytorch Vote
+            if pyt_pred > pyt_predTwo:
+                fav_Score += 1
+            elif pyt_predTwo > pyt_pred:
+                und_score += 1
+            else:
+                fav_Score += 0.5
+                und_score += 0.5
+
+
+
+            if fav_Score > und_score:
+                print("fav",fav_Score)
+                print(und_score)
+                return render_template('index.html', UNDERDOG="{} %".format(round(favloss * 100)),
+                                       FAVOURITE="{} %".format(round(fav * 100)))
+
+            elif und_score > fav_Score:
+                print("under",und_score)
+                print(fav_Score)
+                return render_template('index.html', UNDERDOG="{} %".format(round(und * 100)),
+                                       FAVOURITE="{} %".format(round(undLoss * 100)))
+
+            else:
+                print("under", und_score)
+                print("fav",fav_Score)
+                return render_template('index.html', UNDERDOG="{} %".format("Draw"),
+                                       FAVOURITE="{} %".format("Draw"))
 
         else:
             print("Did not get dataset", flush=True)
 
-            # output = (round(1000, 2) * 100 / 1)
+            # outputRandForest = (round(1000, 2) * 100 / 1)
             #
-            # print(output, flush=True)
+            # print(outputRandForest, flush=True)
 
         return render_template('index.html')
     else:
