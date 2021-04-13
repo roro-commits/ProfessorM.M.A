@@ -4,11 +4,13 @@ from flask import Flask, request, jsonify, render_template
 import pickle
 import joblib
 import pandas as pd
+from flask_cors import CORS, cross_origin
 from sklearn.preprocessing import LabelEncoder as encoder, MinMaxScaler
 from NueralNetwork_M import Net
 import xgboost
 
 app = Flask(__name__)
+CORS(app, support_credentials=True)
 model = pickle.load(open('savedModel/RandModel.pkl', 'rb'))
 
 PATH = "savedModel/p_Nueralnet.pth"
@@ -182,7 +184,6 @@ def predict():
             print("Random Forest Prediction ", outputRandForest, flush=True)
             print("Random Forest Prediction ", outputRandForestTwo, flush=True)
 
-
             ######### Predictions #########
             # random forest win and loss ratio
             randomForestLossFav = outputRandForest[0][0]
@@ -208,7 +209,7 @@ def predict():
             fav_Score = 0
             und_score = 0
 
-            #Random Forest Vote
+            # Random Forest Vote
             if randomForestWinFav > randomForestWinTwoUnd:
                 fav_Score += 1
 
@@ -234,23 +235,21 @@ def predict():
                 fav_Score += 0.5
                 und_score += 0.5
 
-
-
             if fav_Score > und_score:
-                print("fav",fav_Score)
+                print("fav", fav_Score)
                 print(und_score)
                 return render_template('index.html', UNDERDOG="{} %".format(round(favloss * 100)),
                                        FAVOURITE="{} %".format(round(fav * 100)))
 
             elif und_score > fav_Score:
-                print("under",und_score)
+                print("under", und_score)
                 print(fav_Score)
                 return render_template('index.html', UNDERDOG="{} %".format(round(und * 100)),
                                        FAVOURITE="{} %".format(round(undLoss * 100)))
 
             else:
                 print("under", und_score)
-                print("fav",fav_Score)
+                print("fav", fav_Score)
                 return render_template('index.html', UNDERDOG="{} %".format("Draw"),
                                        FAVOURITE="{} %".format("Draw"))
 
@@ -278,6 +277,17 @@ def predict_api():
     return jsonify(output)
 
     # return jsonify(output)
+
+
+@app.route("/fighterDataset2.json", methods=["GET"])
+@cross_origin(supports_credentials=True)
+def get_example():
+    """GET in server"""
+    response = jsonify(message="Simple server is running")
+
+    # Enable Access-Control-Allow-Origin
+    response.headers.add("Access-Control-Allow-Origin", "*")
+    return response
 
 
 if __name__ == "__main__":
