@@ -2,28 +2,88 @@
 import React,{useEffect,useState} from 'react';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import {json} from 'd3'
 import axios from 'axios'
 import FighterData from '../Data/fighterDataset.json'
 import { Button } from '@material-ui/core';
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
+import { withStyles } from '@material-ui/styles';
+import Card from '@material-ui/core/Card';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import Typography from '@material-ui/core/Typography';
 
 
 
 
-        // FighterData.DOB
-        // FighterData.SApM
-        // FighterData.SLpM
-        // FighterData.REACH
-        // FighterData.STANCE
-        // FighterData.WEIGHT
-        // FighterData["Str. Acc.."]
-        // FighterData["Str. Def"]
-        // FighterData["TD Acc"]
-        // FighterData["Sub. Avg"]
-        // FighterData["TD Def."]
-        // FighterData["TD Avg"]
 
-export default class ComboBox extends React.Component {
+      // abstract Grid
+
+     const Grids = (props) => <Grid container {...props} />
+     const GridCol = (props) => <Grid container direction ='column'{...props} />
+     const GridRow = (props) => <Grid container direction ='row'{...props} />
+     const Item = (props) => <Grid item {...props} />
+
+
+
+
+const useStyle = theme => ({
+  toolbarMargin: {
+    ...theme.mixins.toolbar,
+    marginBottom: "1em",
+    [theme.breakpoints.down("xs")]:{
+      marginBottom: "1.5em",
+
+    },
+  },
+  logo: {
+    // height:"100px",
+    width: "16em",
+    [theme.breakpoints.down("md")]:{
+      height: "5em",
+      width: "17em",
+    },
+    [theme.breakpoints.down("xs")]:{
+      height: "5.5em",
+      width: "19em",
+
+    },
+
+  },
+  paper:{
+     display: "flex",
+    flexWrap: "wrap",
+    "& > *": {
+       marginTop:theme.spacing(200),
+      margin: theme.spacing(30),
+      width: theme.spacing(300),
+      height: theme.spacing(16)
+    }
+  },
+   root: {
+      backgroundColor:'gray',
+    minWidth: 200,
+     minHeight:300,
+  },
+  bullet: {
+    display: 'inline-block',
+    margin: '0 2px',
+    transform: 'scale(0.8)',
+  },
+  title: {
+    fontSize: 14,
+  },
+  pos: {
+    marginBottom: 12,
+  },
+});
+
+
+
+
+
+
+class ComboBox extends React.Component {
 constructor(props){
     super(props)
     this.state = {
@@ -43,12 +103,14 @@ constructor(props){
       tdAvg:[],
       FighterA:[],
       FighterB:[],
+      Response:'',
     }
     this.getFighterA = this.getFighterA.bind(this);
     this.getFighterB = this.getFighterB.bind(this);
     this.postData = this.postData.bind(this);
 
   }
+
 
   async getOptions(){
     const res = await axios.get('http://127.0.0.1:5000/static/fighterDataset2.json')
@@ -87,31 +149,9 @@ constructor(props){
         tdDef.push({"tdDef":FighterData["TD Def."][i]})
         tdAvg.push({"tdAvg":FighterData["TD Avg"][i]})
 
-        // FighterData.DOB
-        // FighterData.SApM
-        // FighterData.SLpM
-        // FighterData.REACH
-        // FighterData.STANCE
-        // FighterData.WEIGHT
-        // FighterData["Str. Acc.."]
-        // FighterData["Str. Def"]
-        // FighterData["TD Acc"]
-        // FighterData["Sub. Avg"]
-        // FighterData["TD Def."]
-        // FighterData["TD Avg"]
+
       }
     }
-    // const SApM =[]
-    // const SLpM =[]
-    // const REACH =[]
-    // const STANCE =[]
-    // const WEIGHT =[]
-    // const strAcc =[]
-    // const strDef =[]
-    // const tdAcc =[]
-    // const subAvg =[]
-    // const tdDef =[]
-    // const tdAvg =[]
 
     this.setState({selectOptionsNames: nameData})
     this.setState({height: heightData})
@@ -140,20 +180,6 @@ constructor(props){
    this.setState({name:e.label})
   }
 
-    // FighterB.push(this.state.selectOptionsNames[indexB].Name)
-    //   FighterB.push(this.state.height[indexB].Height)
-    //   FighterB.push(this.state.SLpM[indexB].SLpM)
-    //   FighterB.push(this.state.DOB[indexB].DOB)
-    //   FighterB.push(this.state.strikeAccuracy[indexB].StrAcc)
-    //   FighterB.push(this.state.REACH[indexB].REACH)
-    //   FighterB.push(this.state.STANCE[indexB].STANCE)
-    //   FighterB.push(this.state.WEIGHT[indexB].WEIGHT)
-    //   FighterB.push(this.state.strDef[indexB].strDef)
-    //   FighterB.push(this.state.tdAcc[indexB].tdAcc)
-    //   FighterB.push(this.state.subAvg[indexB].subAvg)
-    //   FighterB.push(this.state.tdDef[indexB].tdDef)
-    //   FighterB.push(this.state.tdAvg[indexB].tdAvg)
-    //   FighterB.push(this.state.SApM[indexB].SApM)
 
   getFighterA(param){
     const indexA = this.state.selectOptionsNames.indexOf(param);
@@ -209,9 +235,8 @@ constructor(props){
   }
 
 
-  postData(){
+  async postData(){
   let predictData ;
-
 
 
     if(this.state.FighterA.length > 0 && this.state.FighterB.length > 0){
@@ -220,57 +245,131 @@ constructor(props){
 
     const axios = require('axios')
 
-  axios.post('http://localhost:5000/predict', predictData)
-    .then(function (response) {
-      console.log(response);
-    })
+  // axios.post('http://localhost:5000/predict', predictData)
+  //   .then(function (response) {
+  //     console.log(response);
+  //   })
 
+    const  res = axios({
+          url: 'http://localhost:5000/react_api ',
+          method:'POST',
+          data: predictData,
+        // `headers` are custom headers to be sent
+          headers: {'form':'form'},
+      })
+      .then ((response) =>{
+        console.log(response.data)
+        console.log("File has been sent to the server ")
+        this.setState({Response:response.data})
+      })
+      .catch(() =>{
+        console.log("internal Server Error")
+      });;
 
 
     console.log(predictData);
 
+    // console.log(res)
+
+
   }
 
 
+     // const Grids = (props) => <Grid container {...props} />
+     // const GridCol = (props) => <Grid container direction ='column'{...props} />
+     // const GridRow = (props) => <Grid container direction ='row'{...props} />
+     // const Item = (props) => <Grid item {...props} />
+
+
   render(){
+      const { classes } = this.props;
+      const bull = <span className={classes.bullet}>•</span>;
     return (
+
     <React.Fragment>
+        {/*<Grids >*/}
+            <GridRow>
+                <Item xs={12}>
+                      <GridRow spacing={1}>
 
-      <Autocomplete
-      id="combo-box-demo"
-      options={this.state.selectOptionsNames}
-      getOptionLabel={(option) => option.Name}
-      style={{ width: 300 }}
-      onChange={(event, value) => this.getFighterA(value)} // sends Index of selected Item Fighter A
-      renderInput={(params ) => <TextField {...params}  label="Combo box" variant="outlined" />}
-    />
-       <Autocomplete
-      id="combo-box-demo"
-      options={this.state.selectOptionsNames  }
-      getOptionLabel={(option) => option.Name}
-      style={{ width: 300 }}
-      onChange={(event, value) => this.getFighterB(value)} // sends Index of selected Item Fighter B
-      renderInput={(params) => <TextField {...params} label="Combo box" variant="outlined" />}
-    />
-       <label htmlFor="contained-button-file">
-        <Button variant="contained" color="primary" onClick={this.postData} component="span">
-          Upload
-        </Button>
-      </label>
+                            <Item xs={12} lg={6}>
+                                <Card  elevation={3} className={classes.root}>
+                                    <CardContent>
+                                      ABC
+                                    </CardContent>
+                                    <CardActions>
+                                      <Button size="small">Learn More</Button>
+                                    </CardActions>
+                                </Card>
+                                <Paper  styles={classes.paper}>
 
-      {/*{*/}
-      {/*  console.log("--****************A")*/}
-      {/*}*/}
-      {/*{*/}
-      {/*          console.log("FighterA",this.state.FighterA)*/}
+                                 <Autocomplete
+                                  id="combo-box-demo"
+                                  options={this.state.selectOptionsNames}
+                                  getOptionLabel={(option) => option.Name}
+                                  style={{ width: 300 }}
+                                  onChange={(event, value) => this.getFighterA(value)} // sends Index of selected Item Fighter A
+                                  renderInput={(params ) => <TextField {...params}  label="Combo box" variant="outlined" />}
+                                />
 
-      {/*}*/}
+                                </Paper>
+                          </Item>
+
+                            <Item xs={12} lg={6}>
+                                <Card  elevation={3} className={classes.root}>
+                                    <CardContent>
+                                     ABC
+                                    </CardContent>
+                                    <CardActions>
+                                      <Button size="small">Learn More</Button>
+                                    </CardActions>
+                                </Card>
+
+                            {/*<Paper>*/}
+
+                               <Autocomplete
+                                      id="combo-box-demo"
+                                      options={this.state.selectOptionsNames  }
+                                      getOptionLabel={(option) => option.Name}
+                                      style={{ width: 300 }}
+                                      onChange={(event, value) => this.getFighterB(value)} // sends Index of selected Item Fighter B
+                                      renderInput={(params) => <TextField {...params} label="Combo box" variant="outlined" />}
+                                    />
+
+
+
+                          </Item>
+                          <GridRow>
+                              <Item>
+
+                                  <label htmlFor="contained-button-file">
+                                      <Button variant="contained" color="primary" onClick={this.postData} component="span" >
+                                        Upload
+                                      </Button>
+                                </label>
+                                    <h1>
+                                        {this.state.Response}
+                                  </h1>
+                              </Item>
+
+                          </GridRow>
+
+                      </GridRow>
+                </Item>
+            </GridRow>
+
+
+
+
+        {/*</Grids>*/}
+
+
     </React.Fragment>
 
   );
   }
-
-
 }
 
 
+// export default class ComboBox
+export default withStyles(useStyle)(ComboBox)
