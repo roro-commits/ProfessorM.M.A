@@ -11,6 +11,7 @@ import { withStyles } from '@material-ui/styles';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
+import CardActionArea from '@material-ui/core/CardActionArea';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box'
 
@@ -295,11 +296,44 @@ constructor(props){
 
                             <Item xs={12} lg={6}>
                                 <Card  elevation={3} className={classes.root}>
-                                    <CardContent>
-                                      ABC
-                                    </CardContent>
+                                    <CardActionArea>
+                                        <CardActions>
+                                            <CardContent>
+                                                <Typography variant="h7" component="h1">
+                                                    UnderDog : {this.state.FighterB[0]}
+                                                 </Typography>
+                                            </CardContent>
+                                        </CardActions>
+                                    </CardActionArea>
+
+
                                     <CardActions>
-                                      <Button size="small">Learn More</Button>
+                                        <Typography variant="h6" color="textPrimary" component="p">
+                                           Height: {this.state.FighterB[1]}
+                                        </Typography>
+                                    </CardActions>
+
+                                     <CardActions>
+                                        <Typography variant="h6" color="textPrimary" component="p">
+                                           Weight: {this.state.FighterB[2]}
+                                        </Typography>
+                                    </CardActions>
+
+                                    <CardActions>
+                                        <Typography variant="h6" color="textPrimary" component="p">
+                                           Reach: {this.state.FighterB[3]}
+                                        </Typography>
+                                    </CardActions>
+
+                                    <CardActions>
+                                        <Typography variant="h6" color="textPrimary" component="p">
+                                           Stance {this.state.FighterB[4]}
+                                        </Typography>
+                                    </CardActions>
+                                      <CardActions>
+                                        <Typography variant="h6" color="textPrimary" component="p">
+                                           Dob {this.state.FighterB[5]}
+                                        </Typography>
                                     </CardActions>
                                 </Card>
                               <GridRow>
@@ -325,11 +359,44 @@ constructor(props){
 
                             <Item xs={12} lg={6}>
                                 <Card  elevation={3} className={classes.root}>
-                                    <CardContent>
-                                     ABC
-                                    </CardContent>
+                                    <CardActionArea>
+                                        <CardActions>
+                                            <CardContent>
+                                                <Typography variant="h7" component="h1">
+                                                    UnderDog : {this.state.FighterB[0]}
+                                                 </Typography>
+                                            </CardContent>
+                                        </CardActions>
+                                    </CardActionArea>
+
+
                                     <CardActions>
-                                      <Button size="small">Learn More</Button>
+                                        <Typography variant="h6" color="textPrimary" component="p">
+                                           Height: {this.state.FighterB[1]}
+                                        </Typography>
+                                    </CardActions>
+
+                                     <CardActions>
+                                        <Typography variant="h6" color="textPrimary" component="p">
+                                           Weight: {this.state.FighterB[2]}
+                                        </Typography>
+                                    </CardActions>
+
+                                    <CardActions>
+                                        <Typography variant="h6" color="textPrimary" component="p">
+                                           Reach: {this.state.FighterB[3]}
+                                        </Typography>
+                                    </CardActions>
+
+                                    <CardActions>
+                                        <Typography variant="h6" color="textPrimary" component="p">
+                                           Stance {this.state.FighterB[4]}
+                                        </Typography>
+                                    </CardActions>
+                                      <CardActions>
+                                        <Typography variant="h6" color="textPrimary" component="p">
+                                           Dob {this.state.FighterB[5]}
+                                        </Typography>
                                     </CardActions>
                                 </Card>
 
