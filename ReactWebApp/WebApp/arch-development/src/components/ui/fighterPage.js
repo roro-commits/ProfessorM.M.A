@@ -101,7 +101,7 @@ minWidth: 200,
 
 
 
-class ComboBox extends React.Component {
+class ProfessorMMA extends React.Component {
 constructor(props){
     super(props)
     this.state = {
@@ -521,4 +521,4 @@ constructor(props){
 
 
 // export default class ComboBox
-export default withStyles(useStyle)(ComboBox)
+export default withStyles(useStyle)(ProfessorMMA)
