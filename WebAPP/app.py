@@ -482,30 +482,24 @@ def react_api():
             if fav_Score > und_score:
                 print("fav", fav_Score)
                 print(und_score)
-                # return render_template('index.html', UNDERDOG="{} %".format(round(favloss * 100)),
-                #                        FAVOURITE="{} %".format(round(fav * 100)))
-                score = str(fav_Score)
-                return (score)
-
+                fav = format(round(fav * 100))
+                und = format(round(favloss * 100))
+                return ({'UNDERDOG': und,
+                         'FAVOURITE': fav,
+                         })
             elif und_score > fav_Score:
                 print("under", und_score)
                 print(fav_Score)
-                # return render_template('index.html', UNDERDOG="{} %".format(round(und * 100)),
-                #                        FAVOURITE="{} %".format(round(undLoss * 100)))
-                score = str(und_score)
-
-
-                return str(score)
-
+                und =  format(round(und * 100) )
+                fav =  format(round(undLoss * 100))
+                return ( {'UNDERDOG': und ,
+                          'FAVOURITE': fav,
+                          })
 
             else:
-                print("under", und_score)
-                print("fav", fav_Score)
-                # return render_template('index.html', UNDERDOG="{} %".format("Draw"),
-                #                        FAVOURITE="{} %".format("Draw"))
-                #
-                return ('Draw')
-            # return()
+                return ({'UNDERDOG': 'Draw',
+                         'FAVOURITE': 'Draw',
+                         })
 
         else:
             print("Did not get dataset", flush=True)

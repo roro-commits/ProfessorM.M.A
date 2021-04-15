@@ -67,6 +67,22 @@ const useStyle = theme => ({
     minWidth: 200,
      minHeight:300,
   },
+  Win: {
+      backgroundColor: '#BCE6DA',
+    minWidth: 200,
+     minHeight:300,
+  },
+ Loss: {
+  backgroundColor:'#F0A89C',
+minWidth: 200,
+ minHeight:300,
+},
+    draw:{
+        backgroundColor: '#F0E79C',
+        minWidth: 200,
+        minHeight:300,
+
+    },
   bullet: {
     display: 'inline-block',
     margin: '0 2px',
@@ -105,7 +121,13 @@ constructor(props){
       tdAvg:[],
       FighterA:[],
       FighterB:[],
-      Response:'',
+      Response:false,
+      Response1:false,
+      Favourite: '',
+      UnderDog: '',
+      favWin:false,
+      undWin:false,
+      draw:false,
     }
     this.getFighterA = this.getFighterA.bind(this);
     this.getFighterB = this.getFighterB.bind(this);
@@ -206,6 +228,10 @@ constructor(props){
       FighterA.push(this.state.subAvg[indexA].subAvg)
     }
     this.setState({FighterA:FighterA})
+    this.setState({Response:false});
+    this.setState({favWin:false});
+    this.setState({undWin:false});
+    this.setState({draw:false});
 
 
 
@@ -232,7 +258,10 @@ constructor(props){
       FighterB.push(this.state.subAvg[indexB].subAvg)
 
     }
-    this.setState({FighterB:FighterB})
+    this.setState({FighterB:FighterB});
+    this.setState({Response1:false});
+    this.setState({undWin:''});
+    this.setState({draw:''});
 
   }
 
@@ -260,9 +289,38 @@ constructor(props){
           headers: {'form':'form'},
       })
       .then ((response) =>{
+
+         // let fighterA = '';
+         // let fighterB = '';
+
         console.log(response.data)
         console.log("File has been sent to the server ")
-        this.setState({Response:response.data})
+        this.setState({Response:true})
+        this.setState({Response1:true})
+
+
+        let fighterA =  response.data.FAVOURITE;
+        let fighterB = response.data.UNDERDOG;
+
+        if ( fighterA !== 'Draw' && fighterB !== 'Draw'){
+            fighterA =Number(fighterA)
+            fighterB =Number(fighterB)
+
+            if (fighterA > fighterB){
+                this.setState({favWin:true});
+                this.setState({undWin:false});
+            }else {
+                this.setState({undWin:true});
+                this.setState({favWin:false});
+            }
+        }else{
+            this.setState({draw:true})
+        }
+
+        this.setState({Favourite:fighterA})
+        this.setState({UnderDog:fighterB})
+
+
       })
       .catch(() =>{
         console.log("internal Server Error")
@@ -295,12 +353,17 @@ constructor(props){
                       <GridRow spacing={10}>
 
                             <Item xs={12} lg={6}>
-                                <Card  elevation={3} className={classes.root}>
+                                <Card  elevation={3} className={this.state.Response? this.state.draw ?  classes.draw : this.state.favWin ? classes.Win: classes.Loss : classes.root}>
                                     <CardActionArea>
                                         <CardActions>
                                             <CardContent>
                                                 <Typography variant="h7" component="h1">
-                                                    UnderDog : {this.state.FighterB[0]}
+                                                    Favourite : {this.state.FighterA[0]}
+                                                 </Typography>
+                                                  <Typography variant="h2" component="h1">
+                                                    {/*{this.state.Response ? this.state.Favourite + 'Percent' : '' }*/}
+                                                   {this.state.Response ? this.state.draw ? this.state.Favourite : this.state.Favourite + 'Percent' : ''}
+
                                                  </Typography>
                                             </CardContent>
                                         </CardActions>
@@ -309,30 +372,30 @@ constructor(props){
 
                                     <CardActions>
                                         <Typography variant="h6" color="textPrimary" component="p">
-                                           Height: {this.state.FighterB[1]}
+                                           Height: {this.state.FighterA[1]}
                                         </Typography>
                                     </CardActions>
 
                                      <CardActions>
                                         <Typography variant="h6" color="textPrimary" component="p">
-                                           Weight: {this.state.FighterB[2]}
+                                           Weight: {this.state.FighterA[2]}
                                         </Typography>
                                     </CardActions>
 
                                     <CardActions>
                                         <Typography variant="h6" color="textPrimary" component="p">
-                                           Reach: {this.state.FighterB[3]}
+                                           Reach: {this.state.FighterA[3]}
                                         </Typography>
                                     </CardActions>
 
                                     <CardActions>
                                         <Typography variant="h6" color="textPrimary" component="p">
-                                           Stance {this.state.FighterB[4]}
+                                           Stance {this.state.FighterA[4]}
                                         </Typography>
                                     </CardActions>
                                       <CardActions>
                                         <Typography variant="h6" color="textPrimary" component="p">
-                                           Dob {this.state.FighterB[5]}
+                                           Dob {this.state.FighterA[5]}
                                         </Typography>
                                     </CardActions>
                                 </Card>
@@ -358,12 +421,16 @@ constructor(props){
                           </Item>
 
                             <Item xs={12} lg={6}>
-                                <Card  elevation={3} className={classes.root}>
+                                <Card  elevation={3} className={this.state.Response1?  this.state.draw ?  classes.draw : this.state.undWin ? classes.Win: classes.Loss : classes.root}>
                                     <CardActionArea>
                                         <CardActions>
                                             <CardContent>
                                                 <Typography variant="h7" component="h1">
                                                     UnderDog : {this.state.FighterB[0]}
+                                                 </Typography>
+                                                <Typography variant="h2" component="h1">
+                                                    {/*{this.state.Response ? this.state.UnderDog + 'Percent' : '' }*/}
+                                                    {this.state.Response1 ? this.state.draw ? this.state.UnderDog : this.state.UnderDog + 'Percent' : ''}
                                                  </Typography>
                                             </CardContent>
                                         </CardActions>
@@ -434,7 +501,7 @@ constructor(props){
                                       </Button>
                                 </label>
                                     <h1>
-                                        {this.state.Response}
+                                        {/*{this.state.Response}*/}
                                   </h1>
                             </Item>
 
