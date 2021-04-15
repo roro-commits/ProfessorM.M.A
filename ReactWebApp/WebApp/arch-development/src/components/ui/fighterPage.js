@@ -12,6 +12,7 @@ import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
+import Box from '@material-ui/core/Box'
 
 
 
@@ -61,7 +62,7 @@ const useStyle = theme => ({
     }
   },
    root: {
-      backgroundColor:'gray',
+      backgroundColor: '#FAFAFA',
     minWidth: 200,
      minHeight:300,
   },
@@ -287,10 +288,10 @@ constructor(props){
     return (
 
     <React.Fragment>
-        {/*<Grids >*/}
-            <GridRow>
+       <Box p={5}>
+           <GridRow >
                 <Item xs={12}>
-                      <GridRow spacing={1}>
+                      <GridRow spacing={10}>
 
                             <Item xs={12} lg={6}>
                                 <Card  elevation={3} className={classes.root}>
@@ -301,18 +302,25 @@ constructor(props){
                                       <Button size="small">Learn More</Button>
                                     </CardActions>
                                 </Card>
-                                <Paper  styles={classes.paper}>
+                              <GridRow>
+                                  <Item >
+                                      <Box p={1.5}>
+                                          <Paper  styles={classes.paper}>
 
-                                 <Autocomplete
-                                  id="combo-box-demo"
-                                  options={this.state.selectOptionsNames}
-                                  getOptionLabel={(option) => option.Name}
-                                  style={{ width: 300 }}
-                                  onChange={(event, value) => this.getFighterA(value)} // sends Index of selected Item Fighter A
-                                  renderInput={(params ) => <TextField {...params}  label="Combo box" variant="outlined" />}
-                                />
+                                             <Autocomplete
+                                              id="FighterA"
+                                              options={this.state.selectOptionsNames}
+                                              getOptionLabel={(option) => option.Name}
+                                              style={{ width: 500 }}
+                                              onChange={(event, value) => this.getFighterA(value)} // sends Index of selected Item Fighter A
+                                              renderInput={(params ) => <TextField {...params}  label="Fighters" variant="outlined" />}
+                                            />
+                                        </Paper>
+                                      </Box>
 
-                                </Paper>
+                                </Item>
+
+                              </GridRow>
                           </Item>
 
                             <Item xs={12} lg={6}>
@@ -325,32 +333,43 @@ constructor(props){
                                     </CardActions>
                                 </Card>
 
-                            {/*<Paper>*/}
+                            <GridRow  justify="flex-end"
+                                alignItems="flex-end" >
 
-                               <Autocomplete
-                                      id="combo-box-demo"
-                                      options={this.state.selectOptionsNames  }
-                                      getOptionLabel={(option) => option.Name}
-                                      style={{ width: 300 }}
-                                      onChange={(event, value) => this.getFighterB(value)} // sends Index of selected Item Fighter B
-                                      renderInput={(params) => <TextField {...params} label="Combo box" variant="outlined" />}
-                                    />
+                                <Item >
+                                   <Box p={1.5}>
+                                    <Paper styles={classes.paper}>
+                                       <Autocomplete
+                                              id="FighterB"
+                                              options={this.state.selectOptionsNames  }
+                                              getOptionLabel={(option) => option.Name}
+                                              style={{ width: 500 }}
+                                              onChange={(event, value) => this.getFighterB(value)} // sends Index of selected Item Fighter B
+                                              renderInput={(params) => <TextField {...params} label="Fighters" variant="outlined" />}
+                                        />
+                                    </Paper>
+                                   </Box>
+                                </Item>
 
-
-
+                          </GridRow>
                           </Item>
+
+
                           <GridRow>
-                              <Item>
+                              <Item   container
+                                direction="row"
+                                justify="center"
+                                alignItems="center">
 
                                   <label htmlFor="contained-button-file">
-                                      <Button variant="contained" color="primary" onClick={this.postData} component="span" >
-                                        Upload
+                                      <Button size='large' variant="contained" color="primary" onClick={this.postData} component="span" >
+                                            Predict
                                       </Button>
                                 </label>
                                     <h1>
                                         {this.state.Response}
                                   </h1>
-                              </Item>
+                            </Item>
 
                           </GridRow>
 
@@ -358,11 +377,7 @@ constructor(props){
                 </Item>
             </GridRow>
 
-
-
-
-        {/*</Grids>*/}
-
+       </Box>
 
     </React.Fragment>
 
