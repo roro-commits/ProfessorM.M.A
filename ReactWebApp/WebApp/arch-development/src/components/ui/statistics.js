@@ -14,9 +14,20 @@ import CardContent from '@material-ui/core/CardContent';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box'
+// import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip} from 'recharts';
+import {
+  BarChart,
+  Bar,
+  Cell,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ReferenceLine,
+} from 'recharts';
 
 import { Radar, RadarChart, PolarGrid, Legend, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer } from 'recharts';
-
+import Chip from '@material-ui/core/Chip';
 
 
 
@@ -131,6 +142,12 @@ constructor(props){
       favWin:false,
       undWin:false,
       draw:false,
+      chart:[],
+      charttwo:[],
+      radarB:false,
+
+      // fixedOptions:["hello"],
+      // value:[...this.fixedOptions, this.FighterA]
     }
     this.getFighterA = this.getFighterA.bind(this);
 
@@ -206,6 +223,19 @@ constructor(props){
   getFighterA(param){
     const indexA = this.state.selectOptionsNames.indexOf(param);
     const FighterA=[]
+    let radar_one = []
+
+
+         const convertRange =( value, min , max) => {
+
+                for (let i = 0; i < value[0].length; i++)
+                {
+                    if(max - min === 0) return 1;
+                    value[0][i] = (value[0][i] - min) / (max - min);
+
+                }
+                return value[0];
+            };
 
 
     if(indexA !== -1 ){
@@ -224,21 +254,84 @@ constructor(props){
       FighterA.push(this.state.tdAcc[indexA].tdAcc)
       FighterA.push(this.state.tdDef[indexA].tdDef)
       FighterA.push(this.state.subAvg[indexA].subAvg)
+
+       radar_one.push(FighterA.slice(1,2).concat(FighterA.slice(3 ,4)).concat(FighterA.slice(6,13)));
+        console.log("radarone " ,radar_one)
+        radar_one[0][0] = radar_one[0][0] * 30
+        radar_one[0][2] = radar_one[0][2] * 10
+        radar_one[0][4] = radar_one[0][4] * 10
+        radar_one[0][6] = radar_one[0][6] * 10
+
+            let chart = convertRange(radar_one ,2 ,10)
+            this.setState({chart:chart});
+
+
+    }else{
+            this.setState({chart:radar_one});
+            this.setState({FighterB:FighterA});
     }
+
+    // console.log("Chart",chart)
     this.setState({FighterA:FighterA})
     this.setState({Response:false});
-    this.setState({favWin:false});
     this.setState({undWin:false});
     this.setState({draw:false});
+  }
 
+    getFighterB(param){
+    const indexB = this.state.selectOptionsNames.indexOf(param);
+    const FighterB=[]
+    let radar_two = []
+
+     const convertRange =( value, min , max) => {
+
+            for (let i = 0; i < value[0].length; i++)
+            {
+                if(max - min === 0) return 1;
+                value[0][i] = (value[0][i] - min) / (max - min);
+
+            }
+            return value[0];
+        };
+
+    if(indexB!== -1 ){
+      // this.setState({FighterB:[]}) // reset array before setting new data
+      FighterB.push(this.state.selectOptionsNames[indexB].Name)
+      FighterB.push(this.state.height[indexB].Height)
+      FighterB.push(this.state.WEIGHT[indexB].WEIGHT)
+      FighterB.push(this.state.REACH[indexB].REACH)
+      FighterB.push(this.state.STANCE[indexB].STANCE)
+      FighterB.push(this.state.DOB[indexB].DOB)
+      FighterB.push(this.state.SLpM[indexB].SLpM)
+      FighterB.push(this.state.strikeAccuracy[indexB].StrAcc)
+      FighterB.push(this.state.SApM[indexB].SApM)
+      FighterB.push(this.state.strDef[indexB].strDef)
+      FighterB.push(this.state.tdAvg[indexB].tdAvg)
+      FighterB.push(this.state.tdAcc[indexB].tdAcc)
+      FighterB.push(this.state.tdDef[indexB].tdDef)
+      FighterB.push(this.state.subAvg[indexB].subAvg)
+
+
+        radar_two.push(FighterB.slice(1,2).concat(FighterB.slice(3 ,4)).concat(FighterB.slice(6,13)));
+        console.log("Radar Two " ,radar_two)
+        radar_two[0][0] = radar_two[0][0] * 30
+        radar_two[0][2] = radar_two[0][2] * 10
+        radar_two[0][4] = radar_two[0][4] * 10
+        radar_two[0][6] = radar_two[0][6] * 10
+
+            let chart = convertRange(radar_two ,2 ,10)
+            this.setState({charttwo:chart});
+
+    }
+    else{
+            this.setState({charttwo:radar_two});
+            this.setState({FighterB:FighterB});
+    }
+
+        this.setState({FighterB:FighterB});
 
 
   }
-
-
-
-
-
 
 
      // const Grids = (props) => <Grid container {...props} />
@@ -248,21 +341,84 @@ constructor(props){
 
 
   render(){
-      const { classes } = this.props;
-      const bull = <span className={classes.bullet}>•</span>;
+    const { classes } = this.props;
+    const bull = <span className={classes.bullet}>•</span>;
+    const data = [
+  {
+    subject: 'HEIGHT',
+    A: this.state.chart[0],
+    B: this.state.charttwo[0],
+    fullMark: 20,
+  },
+
+  {
+    subject: 'REACH',
+    A: this.state.chart[1],
+    B: this.state.charttwo[1],
+    fullMark: 10,
+  },
+  {
+    subject: 'Strike Landed Per Min',
+    A: this.state.chart[2],
+    B: this.state.charttwo[2],
+    fullMark: 10,
+  },
+  {
+    subject: 'Strike Acc',
+    A: this.state.chart[3],
+    B: this.state.charttwo[3],
+    fullMark: 10,
+  },
+  {
+    subject: 'Strike Absorbed Per Min',
+    A: this.state.chart[4],
+    B: this.state.charttwo[4],
+    fullMark: 10,
+  },
+ {
+    subject: 'Strike Def',
+    A: this.state.chart[5],
+    B: this.state.charttwo[5],
+    fullMark: 10,
+  },
+ {
+    subject: 'Takedown Avg',
+    A: this.state.chart[6],
+    B: this.state.charttwo[6],
+    fullMark: 10,
+  }, {
+    subject: 'Takedown Acc',
+    A: this.state.chart[7],
+    B: this.state.charttwo[7],
+    fullMark: 10,
+  }, {
+    subject: 'Takedown Def',
+    A: this.state.chart[8],
+    B: this.state.charttwo[8],
+    fullMark: 10,
+  },
+  //       {
+  //   subject: 'Submission Avg',
+  //   A: this.state.chart[8],
+  //   B: 0,
+  //   fullMark: 10,
+  // },
+
+];
+
     return (
 
     <React.Fragment>
        <Box p={5}>
-           <GridCol>
-                <GridCol direction="column" justify="center" alignItems="center">
-                    <Item xs={12}>
+           <GridRow>
+               <GridRow  >
+
                       <GridRow spacing={10}>
 
-                            <Item xs={12} lg={6}>
+                                <GridRow xs={6} justify="flex-end" alignItems="center">
+                                    <Item styles={{marginLeft:2000}}>
 
-                              <GridRow>
-                                  <Item >
+
                                       <Box p={1.5}>
                                           <Paper  styles={classes.paper}>
 
@@ -274,27 +430,44 @@ constructor(props){
                                               onChange={(event, value) => this.getFighterA(value)} // sends Index of selected Item Fighter A
                                               renderInput={(params ) => <TextField {...params}  label="Fighters" variant="outlined" />}
                                             />
+
                                         </Paper>
                                       </Box>
-
-                                </Item>
-
-                              </GridRow>
-                          </Item>
+                                    </Item>
+                                </GridRow>
 
 
+                                <GridRow xs={6}  justify="flex-start" alignItems="center" >
+                                    <Item >
 
 
+                                          <Box p={1.5}>
+                                              <Paper  styles={classes.paper}>
+
+                                                 <Autocomplete
+                                                  id="FighterB"
+                                                  options={this.state.selectOptionsNames}
+                                                  getOptionLabel={(option) => option.Name}
+                                                  style={{ width: 500 }}
+                                                  onChange={(event, value) => this.getFighterB(value)} // sends Index of selected Item Fighter A
+                                                  renderInput={(params ) => <TextField {...params}  label="Fighters" variant="outlined" />}
+                                                />
+
+                                            </Paper>
+                                          </Box>
+                                    </Item>
+                                </GridRow>
                       </GridRow>
-                </Item>
+                </GridRow>
+           </GridRow>
 
-                </GridCol>
+           <GridCol>
 
-                  <Box p={10}>
+                  <Box p={15}>
                       <Item xs={12} lg={12}>
                                <GridCol  justify="center" alignItems="center">
                                    <Item>
-                                        <Card  elevation={3} className={this.state.Response1?  this.state.draw ?  classes.draw : this.state.undWin ? classes.Win: classes.Loss : classes.root}>
+                                        <Card elevation={3} className={this.state.Response1?  this.state.draw ?  classes.draw : this.state.undWin ? classes.Win: classes.Loss : classes.root}>
                                     <CardActionArea>
                                         <CardActions>
                                             <CardContent>
@@ -307,12 +480,12 @@ constructor(props){
                                          <GridRow justify="center" alignItems="center">
                                         <Item xs={12}>
                                              <ResponsiveContainer width={1200} height={500}>
-                                                <RadarChart cx="50%" cy="50%" outerRadius="80%" data={data}>
+                                                <RadarChart cx="50%" cy="45%" outerRadius="85%" data={data}>
                                                   <PolarGrid />
                                                   <PolarAngleAxis dataKey="subject" />
-                                                  <PolarRadiusAxis angle={30} domain={[0, 150]} />
-                                                  <Radar name="Mike" dataKey="A" stroke="#8884d8" fill="#8884d8" fillOpacity={0.3} />
-                                                  <Radar name="Lily" dataKey="B" stroke="#82ca9d" fill="#82ca9d" fillOpacity={0.3} />
+                                                  <PolarRadiusAxis angle={40} domain={[0, 10]} />
+                                                  <Radar name={this.state.FighterA[0]} dataKey="A" stroke="#fc9992" fill="#fc9992" fillOpacity={0.6} />
+                                                  <Radar  name={this.state.FighterB[0]} dataKey="B" stroke="#a3eef0" fill="#a3eef0" fillOpacity={0.6} />
                                                   <Legend />
                                                 </RadarChart>
                                             </ResponsiveContainer>
@@ -326,7 +499,7 @@ constructor(props){
                       </Item>
                   </Box>
 
-                  <Box p={20}>
+                  <Box p={10}>
                       <Item xs={12} lg={12}>
                                <GridCol  justify="center" alignItems="center">
                                    <Item>
@@ -342,15 +515,28 @@ constructor(props){
                                         </CardActions>
                                          <GridRow justify="center" alignItems="center">
                                         <Item xs={12}>
-                                             <ResponsiveContainer width={1200} height={500}>
-                                                <RadarChart cx="50%" cy="50%" outerRadius="80%" data={data}>
-                                                  <PolarGrid />
-                                                  <PolarAngleAxis dataKey="subject" />
-                                                  <PolarRadiusAxis angle={30} domain={[0, 150]} />
-                                                  <Radar name="Mike" dataKey="A" stroke="#8884d8" fill="#8884d8" fillOpacity={0.6} />
-                                                  <Radar name="Lily" dataKey="B" stroke="#82ca9d" fill="#82ca9d" fillOpacity={0.6} />
+                                            <ResponsiveContainer width={1200} height={500}>
+                                                <BarChart
+                                                  width={500}
+                                                  height={300}
+                                                  data={data}
+                                                  stackOffset="sign"
+                                                  margin={{
+                                                    top: 5,
+                                                    right: 30,
+                                                    left: 20,
+                                                    bottom: 5,
+                                                  }}
+                                                >
+                                                  <CartesianGrid strokeDasharray="3 3" />
+                                                  <XAxis dataKey="subject" />
+                                                  <YAxis />
+                                                  <Tooltip />
                                                   <Legend />
-                                                </RadarChart>
+                                                  <ReferenceLine y={0} stroke="#000" />
+                                                   <Bar dataKey="A" stackId="a" fill="#8884d8" />
+                                                   <Bar dataKey="B" stackId="a" fill="#82ca9d" />
+                                                </BarChart>
                                             </ResponsiveContainer>
                                         </Item>
                                      </GridRow>
@@ -374,44 +560,6 @@ constructor(props){
   }
 }
 
-const data = [
-  {
-    subject: 'Math',
-    A: 120,
-    B: 110,
-    fullMark: 150,
-  },
-  {
-    subject: 'Chinese',
-    A: 98,
-    B: 130,
-    fullMark: 150,
-  },
-  {
-    subject: 'English',
-    A: 86,
-    B: 130,
-    fullMark: 150,
-  },
-  {
-    subject: 'Geography',
-    A: 99,
-    B: 100,
-    fullMark: 150,
-  },
-  {
-    subject: 'Physics',
-    A: 85,
-    B: 90,
-    fullMark: 150,
-  },
-  {
-    subject: 'History',
-    A: 65,
-    B: 85,
-    fullMark: 150,
-  },
-];
 
 
 // export default class ComboBox

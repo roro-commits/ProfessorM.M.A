@@ -68,7 +68,7 @@ const useStyle = theme => ({
      minHeight:300,
   },
   Win: {
-      backgroundColor: '#BCE6DA',
+      backgroundColor: '#47ff63',
     minWidth: 200,
      minHeight:300,
   },

@@ -36,7 +36,7 @@
   const useStyle = makeStyles(theme => ({
     toolbarMargin: {
       ...theme.mixins.toolbar,
-      marginBottom: "1em",
+      marginBottom: "2em",
       [theme.breakpoints.down("xs")]:{
         marginBottom: "1.5em",
 
@@ -44,10 +44,10 @@
     },
     logo: {
       // height:"100px",
-      width: "5em",
+      width: "3em",
       [theme.breakpoints.down("md")]:{
-        height: "5em",
-        width: "17em",
+        height: "3em",
+        width: "7em",
       },
       [theme.breakpoints.down("xs")]:{
         height: "5.5em",
@@ -139,7 +139,7 @@
       const handleChange = (e ,value) => {
       props.setValue(value)
     }
-
+    //gets the url and see if it matches
     switch(window.location.pathname){
       case "/":
         if (props.value !==0){
@@ -239,6 +239,7 @@
             </Toolbar>
           </AppBar>
         </HideOnScroll>
+         <Toolbar />
         <div className={classes.toolbarMargin}></div>
       </React.Fragment>
     )

@@ -1,6 +1,5 @@
 import scrapy
 
-
 class UfcStatsSpider(scrapy.Spider):
     name = 'ufc_stats'
     start_urls = ['http://www.ufcstats.com/statistics/fighters?char={}&page=all']
