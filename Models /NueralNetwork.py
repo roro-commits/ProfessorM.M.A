@@ -10,7 +10,8 @@ import torchvision
 import torch.optim as optim
 from torch.utils.data import DataLoader, Dataset
 
-UFC_data = pd.read_csv('/root/PycharmProjects/pythonProject1/clean_dataset.csv')
+# UFC_data = pd.read_csv('/root/PycharmProjects/pythonProject1/clean_dataset.csv')
+UFC_data = pd.read_csv('/home/roroblacc/Desktop/FYP/NEWFYP/ProfessorM.M.A/WebAPP/clean_dataset.csv')
 UFC_data['STANCE'].value_counts().plot(kind='bar', color='green')
 # plt.show()
 
