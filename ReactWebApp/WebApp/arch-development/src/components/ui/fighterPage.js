@@ -282,7 +282,7 @@ constructor(props){
   //   })
 
     const  res = axios({
-          url: 'http://localhost:5000/react_api ',
+          url: 'http://localhost:5000/api/react_api ',
           method:'POST',
           data: predictData,
         // `headers` are custom headers to be sent

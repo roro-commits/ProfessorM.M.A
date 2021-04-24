@@ -6,34 +6,43 @@ import joblib
 import pandas as pd
 from flask_cors import CORS, cross_origin
 from sklearn.preprocessing import LabelEncoder as encoder, MinMaxScaler
+from skorch import NeuralNetBinaryClassifier
+
 from NueralNetwork_M import Net
+from skorchNueral import Net as SkorchNet
 import xgboost
 
 app = Flask(__name__)
 CORS(app, support_credentials=True)
+
+# Loading random Forest Model
+
 model = pickle.load(open('savedModel/RandModel.pkl', 'rb'))
 
+##### Loading pytorch Model
+
 PATH = "savedModel/p_Nueralnet.pth"
-# model_pyt = Net()
-# model_pyt.load_state_dict(torch.load(PATH))
-# model_pyt.eval()
-
-##### entire model
-# model_pyt = torch.load(PATH)
-# model_pyt.eval()
-
 model_pyt = Net()
 model_pyt.load_state_dict(torch.load(PATH))
 model_pyt.eval()
 
 # # Loading the Xgb Boost Model
-# xgbModel = pickle.load(open("savedModel/XGBboostModel.dat", "rb"))
 xgbModel = joblib.load(open("savedModel/joblibXGBboostModel.dat", "rb"))
 
+# Loading the Skorch Model
 
-# xgbModel = xgboost.Booster({'n_thread':4})
-# xgbModel.load_model("savedModel/XGBboost.model")
+# SkorchModel = pickle.load(open('savedModel/Skorchmymodel.pkl', 'rb'))
 
+SkorchModel = NeuralNetBinaryClassifier(
+    SkorchNet,
+    max_epochs=20,
+    lr=0.1,
+).initialize()
+
+SkorchModel.load_params('savedModel/Skorchmymodel.pkl')
+
+
+### function to predict the output for pytorch
 def getPrediction(tensor):
     input_x = torch.tensor(tensor)
     input_x = input_x.type(torch.FloatTensor)
@@ -61,7 +70,7 @@ def predict():
     '''
     Renders result in HTML
     '''
-    global randomForestWinFav, randomForestWinTwoUnd
+    global randomForestFavWins, randomForestUnderDogWins
     if request.method == 'POST':
         print("test1", flush=True)
 
@@ -187,9 +196,9 @@ def predict():
             ######### Predictions #########
             # random forest win and loss ratio
             randomForestLossFav = outputRandForest[0][0]
-            randomForestWinFav = outputRandForest[0][1]
+            randomForestFavWins = outputRandForest[0][1]
             randomForestLossTwoUnd = outputRandForestTwo[0][0]
-            randomForestWinTwoUnd = outputRandForestTwo[0][1]
+            randomForestUnderDogWins = outputRandForestTwo[0][1]
 
             # xvg boost prediction
             xgbLossFav = xgbPrediction[0][0]
@@ -202,18 +211,18 @@ def predict():
             pyt_predTwo = pytTwo
 
             ####### Voting System #############
-            fav = (randomForestWinFav + xgbWinFav) / 2
+            fav = (randomForestFavWins + xgbWinFav) / 2
             favloss = (randomForestLossFav + xgbLossFav) / 2
-            und = (randomForestWinTwoUnd + xgbWinTwoUnd) / 2
+            und = (randomForestUnderDogWins + xgbWinTwoUnd) / 2
             undLoss = (randomForestLossTwoUnd + xgbLossTwoUnd) / 2
             fav_Score = 0
             und_score = 0
 
             # Random Forest Vote
-            if randomForestWinFav > randomForestWinTwoUnd:
+            if randomForestFavWins > randomForestUnderDogWins:
                 fav_Score += 1
 
-            elif randomForestWinTwoUnd > randomForestWinFav:
+            elif randomForestUnderDogWins > randomForestFavWins:
                 und_score += 1
             else:
                 fav_Score += 0.5
@@ -290,35 +299,30 @@ def get_example():
     return response
 
 
-@app.route('/react_api', methods=['POST'])
+@app.route('/api/react_api', methods=['POST'])
 @cross_origin(supports_credentials=True)
-
 def react_api():
-    global randomForestWinFav, randomForestWinTwoUnd
+    global randomForestFavWins, randomForestUnderDogWins
 
     if request.method == 'POST':
         if request.data:
             data = request.data.decode('UTF-8')
             # print(request.data)
             # print(len(request.data))
-            print("data",data)
+            print("data", data)
 
             # after receiving data
             print("receiving data", flush=True)
-            data = data.replace("[", "")            # dataset = [x for x in data] stored in a list
+            data = data.replace("[", "")  # dataset = [x for x in data] stored in a list
             data = data.replace("]", "")
             dataset = lambda x: list(x.split(","))
             dataset = dataset(data)
             # dataset = access_token
 
-
-
             print("Datasets", dataset, flush=True)
             print("Datasets 2", dataset[0], flush=True)
             print("Datasets 3", dataset[1], flush=True)
             print("Datasets 4", dataset[2], flush=True)
-
-
 
             # idex not to conver = 0,4,14,18
             # Convert for adding to data frame  # convert to float excluding name stance on both side to be removed or with one hot encoder
@@ -379,20 +383,22 @@ def react_api():
             print(len(UFC_data.iloc[-1]))
 
             toPredict = np.asarray(UFC_data.iloc[-1]).reshape(1, -1)
-            print("system check")
+            print("Data to predict before reverse")
             print(toPredict)
             print("length")
             print(len(toPredict[0]))
+            # data is cut  for the purpose of making underDog the favourite
             toPredictReverseOne = UFC_data.iloc[-1][0:13]
             toPredictReverseTwo = UFC_data.iloc[-1][13:]
             topredictTwo = []
-            ######## revresing the Data for Fav and underdog ########
+            ######## reversing  the Data for Fav and underdog ########
             [topredictTwo.append(x) for x in toPredictReverseTwo]
             [topredictTwo.append(x) for x in toPredictReverseOne]
             topredictTwo = np.asarray(topredictTwo).reshape(1, -1)
             # topredictTwo = np.asarray(topredictTwo)
-            print("Testing ")
+            print("Reversing Data for under Dog  ")
             print(topredictTwo)
+            print("xpected 26 ", len(topredictTwo[0]))
 
             # print("to predict 2", toPredictTwo, flush=True)
             # print("Prediction  Data Processed ", flush=True)
@@ -403,6 +409,15 @@ def react_api():
             pyt = getPrediction(toPredict)
             pytTwo = getPrediction(topredictTwo)
             print("!!!!!!!!!!!pytorch", pyt.round(), flush=True)
+
+            ### Skorch Model Prediction
+            skorch_data = toPredict.astype(np.float32)
+            skorch_dataTwo = topredictTwo.astype(np.float32)
+
+            skorchPrediction = SkorchModel.predict_proba(skorch_data)
+            skorchPredictionTwo = SkorchModel.predict_proba(skorch_dataTwo)
+            print("Skorch Prediction", skorchPrediction)
+            print("Skorch Prediction Two", skorchPredictionTwo)
 
             # XGB Prediction
             xgbPredictionTwo = xgbModel.predict_proba(topredictTwo)
@@ -430,71 +445,76 @@ def react_api():
 
             ######### Predictions #########
             # random forest win and loss ratio
-            randomForestLossFav = outputRandForest[0][0]
-            randomForestWinFav = outputRandForest[0][1]
-            randomForestLossTwoUnd = outputRandForestTwo[0][0]
-            randomForestWinTwoUnd = outputRandForestTwo[0][1]
+            randomForestFavLose = outputRandForest[0][0]
+            randomForestFavWins = outputRandForest[0][1]
+            randomForestUnderDogLose = outputRandForestTwo[0][0]
+            randomForestUnderDogWins = outputRandForestTwo[0][1]
 
             # xvg boost prediction
-            xgbLossFav = xgbPrediction[0][0]
-            xgbWinFav = xgbPrediction[0][1]
-            xgbLossTwoUnd = xgbPredictionTwo[0][0]
-            xgbWinTwoUnd = xgbPredictionTwo[0][1]
-
-            # pytorch prediction
+            xgbFavLose = xgbPrediction[0][0]
+            xgbFavWins = xgbPrediction[0][1]
+            xgbUnderDogLose = xgbPredictionTwo[0][0]
+            xgbUnderDogWins = xgbPredictionTwo[0][1]
+            # pytorch predictions
             pyt_pred = pyt
             pyt_predTwo = pytTwo
-
+            # Skorch Prediction  # just getting the win percentage .. loss can be calculated
+            skorchPredfavLose = skorchPrediction[0][0]
+            skorchPredFavWins = skorchPrediction[0][1]
+            skorchPredUndLose = skorchPredictionTwo[0][0]
+            skorchPredUndWins = skorchPredictionTwo[0][1]
             ####### Voting System #############
-            fav = (randomForestWinFav + xgbWinFav) / 2
-            favloss = (randomForestLossFav + xgbLossFav) / 2
-            und = (randomForestWinTwoUnd + xgbWinTwoUnd) / 2
-            undLoss = (randomForestLossTwoUnd + xgbLossTwoUnd) / 2
+            favouriteWins = (randomForestFavWins + xgbFavWins + skorchPredFavWins) / 3
+            underDog = (randomForestUnderDogWins + xgbUnderDogWins + skorchPredUndWins) / 3
+            favloss = (randomForestFavLose + xgbFavLose + skorchPredfavLose) / 3
+            undLoss = (randomForestUnderDogLose + xgbUnderDogLose + skorchPredUndLose) / 3
             fav_Score = 0
             und_score = 0
 
-            # Random Forest Vote
-            if randomForestWinFav > randomForestWinTwoUnd:
+            # Random Forest Vote  for Favourite
+            if randomForestFavWins > randomForestUnderDogWins:
                 fav_Score += 1
 
-            elif randomForestWinTwoUnd > randomForestWinFav:
+            elif randomForestUnderDogWins > randomForestFavWins:
                 und_score += 1
             else:
                 fav_Score += 0.5
                 und_score += 0.5
             # Xgb Vote
-            if xgbWinFav > xgbWinTwoUnd:
+            if xgbFavWins > xgbUnderDogWins:
                 fav_Score += 1
-            elif xgbWinTwoUnd > xgbWinFav:
+            elif xgbUnderDogWins > xgbFavWins:
                 und_score += 1
             else:
                 fav_Score += 0.5
                 und_score += 0.5
-            # Pytorch Vote
-            if pyt_pred > pyt_predTwo:
+            # Skorch Vote
+            if skorchPredFavWins > skorchPredUndWins:
                 fav_Score += 1
-            elif pyt_predTwo > pyt_pred:
+            elif skorchPredUndWins > skorchPredFavWins:
                 und_score += 1
             else:
                 fav_Score += 0.5
                 und_score += 0.5
 
+            # Random Forest Vote  for UnderDogs
+
             if fav_Score > und_score:
-                print("fav", fav_Score)
-                print(und_score)
-                fav = format(round(fav * 100))
-                und = format(round(favloss * 100))
+                print("fav", favouriteWins)
+                print(underDog)
+                fav = format(round(favouriteWins * 100))
+                und = format(favouriteWins - round(favloss * 100))
                 return ({'UNDERDOG': und,
                          'FAVOURITE': fav,
                          })
             elif und_score > fav_Score:
-                print("under", und_score)
-                print(fav_Score)
-                und =  format(round(und * 100) )
-                fav =  format(round(undLoss * 100))
-                return ( {'UNDERDOG': und ,
-                          'FAVOURITE': fav,
-                          })
+                print("under", underDog)
+                print(favouriteWins)
+                und = format(round(underDog * 100))
+                fav = format(underDog - round(undLoss * 100))
+                return ({'UNDERDOG': und,
+                         'FAVOURITE': fav,
+                         })
 
             else:
                 return ({'UNDERDOG': 'Draw',
@@ -510,6 +530,7 @@ def react_api():
             request.headers.add("Access-Control-Allow-Origin", "*")
 
         return render_template('index.html')
+
 
 if __name__ == "__main__":
     app.run(debug=True)
