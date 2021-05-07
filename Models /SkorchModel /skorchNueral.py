@@ -69,10 +69,10 @@ print("testingType", type(x_data))
 class Net(nn.Module):
 
     def __init__(self,
-                 layer_one_units=40,
-                 layer_two_units=40,
-                 layer_three_units=40,
-                 layer_four_units=40):
+                 layer_one_units=17,
+                 layer_two_units=17,
+                 layer_three_units=17,
+                 layer_four_units=17):
         super(Net, self).__init__()
         self.layer_one_units = layer_one_units
         self.layer_two_units = layer_two_units
@@ -83,17 +83,24 @@ class Net(nn.Module):
         self.fc2 = nn.Linear(layer_one_units, layer_two_units)
         self.fc3 = nn.Linear(layer_two_units, layer_three_units)
         self.fc4 = nn.Linear(layer_three_units, layer_four_units)
-        self.fc5 = nn.Linear(layer_four_units, 1)
+        self.fc5 = nn.Linear(layer_three_units, layer_four_units)
+        self.fc6 = nn.Linear(layer_three_units, layer_four_units)
+        self.fc7 = nn.Linear(layer_three_units, layer_four_units)
+        self.fc8 = nn.Linear(layer_three_units, layer_four_units)
+        self.fc9 = nn.Linear(layer_three_units, layer_four_units)
+        self.fc10 = nn.Linear(layer_four_units, 1)
 
     def forward(self, x):
         x = F.relu(self.fc1(x))
         x = F.relu(self.fc2(x))
         x = F.relu(self.fc3(x))
         x = F.relu(self.fc4(x))
-        x = torch.sigmoid(self.fc5(x))
-        # x = torch.tensor(x.values).float()
-        # x = x.astype(np.float32)
-        # print(x.dtype)
+        x = F.relu(self.fc5(x))
+        x = F.relu(self.fc6(x))
+        x = F.relu(self.fc7(x))
+        x = F.relu(self.fc8(x))
+        x = F.relu(self.fc9(x))
+        x = torch.sigmoid(self.fc10(x))
         return x
 
     def get_num_correct(self, preds, labels):

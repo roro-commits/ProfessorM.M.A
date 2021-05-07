@@ -14,7 +14,7 @@ class Nueral_calc:
         self.input_x  = weights.dot(inputs)
         return self.input_x
     
-    def matrixsub():
+    def matrixsub(self):
 
         pass
 
