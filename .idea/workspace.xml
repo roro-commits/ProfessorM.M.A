@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="fdd064fe-855d-4a48-9630-c00bf080f335" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/Models /SkorchModel /skorchNueral.py" beforeDir="false" afterPath="$PROJECT_DIR$/Models /SkorchModel /skorchNueral.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebAPP/savedModel/Skorchmymodel.pkl" beforeDir="false" afterPath="$PROJECT_DIR$/WebAPP/savedModel/Skorchmymodel.pkl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/calc/NN_calc.py" beforeDir="false" afterPath="$PROJECT_DIR$/calc/NN_calc.py" afterDir="false" />
-    </list>
+    <list default="true" id="fdd064fe-855d-4a48-9630-c00bf080f335" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -207,6 +203,7 @@
       <workItem from="1619556083296" duration="1606000" />
       <workItem from="1619623065276" duration="847000" />
       <workItem from="1620427491932" duration="13184000" />
+      <workItem from="1620486021181" duration="381000" />
     </task>
     <servers />
   </component>
