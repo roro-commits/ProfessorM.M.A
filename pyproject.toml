@@ -1,0 +1,40 @@
+[project]
+name = "ProfessorM.M.A"
+version = "0.2.0"
+description = "Default template for PDM package"
+authors = [
+    {name = "Rotimi Awoniran", email = "olarotimi@protonmail.com"},
+]
+dependencies = [
+    "click",
+    "Flask",
+    "Flask-Cors",
+    "itsdangerous",
+    "Jinja2",
+    "joblib",
+    "MarkupSafe",
+    "numpy",
+    "scikit-learn",
+    "scipy",
+    "six",
+    "skorch",
+    "tabulate",
+    "threadpoolctl",
+    "tqdm",
+    "typing-extensions",
+    "Werkzeug",
+    "matplotlib",
+    "pandas",
+    "gunicorn",
+    "xgboost",
+    "torch",
+    "skorch",
+    "pandas",
+    "matplotlib",
+    "flask",
+    "scrapy>=2.15.0",
+]
+requires-python = "==3.13.*"
+readme = "README.md"
+license = {text = "MIT"}
+distribution = true
