@@ -1,6 +1,6 @@
 ## Changelog
 
-### v0.3.0
+### v0.3.0 - 2026.04.21
 - Added: PDM as the package manager 
 
 ### v0.2.0 — 2026.04.21
