@@ -2,6 +2,7 @@
 
 ### v0.3.0 - 2026.04.21
 - Added: PDM as the package manager 
+- Disabled GitAction
 
 ### v0.2.0 — 2026.04.21
 - Changed: Restructured project into clean modular layout
