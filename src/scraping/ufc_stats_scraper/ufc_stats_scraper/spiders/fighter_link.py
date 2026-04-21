@@ -1,6 +1,5 @@
 import scrapy
 
-
 class FighterLinkSpider(scrapy.Spider):
     name = 'fighter_link'
     start_urls = ['http://www.ufcstats.com/statistics/fighters?char={}&page=all']

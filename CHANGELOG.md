@@ -1,5 +1,10 @@
 ## Changelog
 
+### v0.3.1 - 2026.04.21
+- Added: Ruff Linter
+- Added: mypy type checker
+- Added: scrapy files 
+
 ### v0.3.0 - 2026.04.21
 - Added: PDM as the package manager 
 - Disabled GitAction

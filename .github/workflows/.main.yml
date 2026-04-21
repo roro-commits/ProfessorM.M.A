@@ -1,0 +1,58 @@
+name: CI
+
+on: [push]
+
+jobs:
+  build:
+
+
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [ 3.7]
+
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python-version }}
+        
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install flake8 pytest
+        pip install numpy
+        pip install matplotlib
+        pip install scrapy
+        pip install pandas
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+    - name : Fighters stat link crawl
+      run: |
+        cd ufcFighterData
+        scrapy crawl fighterdataLink -o ProfessorM.M.A/fighterDataLink.csv
+      #        python NueralNetwork.py > output.txt
+    - name: upload fighters stats link
+      uses: actions/upload-artifact@v2
+      with:
+        name: fighterdataLink
+        path: ProfessorM.M.A/fighterDataLink.csv
+      # Use always() to always run this step to publish test results when there are test failures
+      if: ${{ always() }}
+
+    # - name: Download math result for job 1
+    #   uses: actions/download-artifact@v2
+    #   with:
+    #     name: fighterdataLink
+
+    - name: save fighter statistics
+      run: |
+        cd fighterData
+        scrapy crawl fighterData -o ProfessorM.M.A/fighterData.csv
+
+    - name: Upload math result for job 2
+      uses: actions/upload-artifact@v2
+      with:
+        name: fighterDataStats
+        path: ProfessorM.M.A/fighterData.csv
