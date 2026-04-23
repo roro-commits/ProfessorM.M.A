@@ -1,5 +1,8 @@
 ## Changelog
 
+### v0.3.2 - 2026.04.23
+- Added: A scrapy script to extract fighter attribute and Id(fighter page link)
+
 ### v0.3.1 - 2026.04.21
 - Added: Ruff Linter
 - Added: mypy type checker
